@@ -8,7 +8,7 @@ import TotalGraph from '../components/graphs/totalGraph/TotalGraph';
 import Axios from 'axios'
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1, 
   },
   paper: {
     padding: theme.spacing(2),
