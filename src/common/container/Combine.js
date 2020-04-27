@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TableTracker from '../components/tableTracker/TableTracker';
-import DailyGraph from '../components/graphs/dailyCases/DailyGraph';
+import DailyGraph from '../components/graphs/dailyReport/DailyGraph';
 import TotalGraph from '../components/graphs/totalGraph/TotalGraph';
 import Axios from 'axios'
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +24,7 @@ export default function Combine() {
   useEffect(() => {
     Axios.get('https://api.covid19india.org/data.json')
       .then((response) => {
-        //   console.log(response.data.cases_time_series)
+          console.log(response.data)
         setTableData(response.data.statewise);
         const d = response.data.cases_time_series.map(data => {
           return {
