@@ -1,28 +1,27 @@
-import {ADD_DAILY_CASES,ADD_STATE_WISE} from '../actions/actionTypes'
+import {ADD_DAILY_CASES,
+    ADD_STATE_WISE,
+    TOTAL_CASES,
+ADD_ROW_TO_SAVE_USER} from '../actions/actionTypes'
 const initialState={
     stateWiseReport:[],
     dailyReport:[],
-    totalReport:{active: "20570",
-    confirmed: "27977",
-    deaths: "884",
-    deltaconfirmed: "87",
-    deltadeaths: "3",
-    deltarecovered: "0",
-    lastupdatedtime: "26/04/2020 19:37:37",
-    recovered: "6523",
-    state: "Total",
-    statecode: "TT",
-    statenotes: ""}
+    totalReport:{},
+    savedByUser:[],
 }
 
 
 const Reducer=(state=initialState,action)=> {
-    // const [type,payload]=action
-    switch(action.type){
+    const {type,payload}=action
+    console.log(type)
+    switch(type){
         case ADD_STATE_WISE:
-            return state;
+            return {...state,stateWiseReport:payload};
         case ADD_DAILY_CASES:
-            return state;
+            return {...state,dailyReport:payload};
+        case TOTAL_CASES:
+            return{...state,totalReport:payload}
+        case ADD_ROW_TO_SAVE_USER:
+            return{...state,savedByUser:[...state.savedByUser,payload]}
         default:
             return state;
     

@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TableTracker from '../components/tableTracker/TableTracker';
 import DailyGraph from '../components/graphs/dailyReport/DailyGraph';
 import TotalGraph from '../components/graphs/totalGraph/TotalGraph';
-import Axios from 'axios'
+import {getDataFromAPI} from '../actions/dataActions'
+import {useDispatch,useSelector} from 'react-redux'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
@@ -19,28 +20,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Combine() {
   const classes = useStyles();
-  const [rows, setRows] = useState(null);
-  const [tableData, setTableData] = useState(null);
+  const dispatch=useDispatch();
+  const rows = useSelector((state)=>state.dailyReport);
+  const tableData = useSelector((state)=>state.stateWiseReport);
+
   useEffect(() => {
-    Axios.get('https://api.covid19india.org/data.json')
-      .then((response) => {
-          console.log(response.data)
-        setTableData(response.data.statewise);
-        const d = response.data.cases_time_series.map(data => {
-          return {
-            ...data,
-            dailyconfirmed: parseInt(data.dailyconfirmed, 10),
-            dailydeceased: parseInt(data.dailydeceased, 10),
-            dailyrecovered: parseInt(data.dailyrecovered, 10),
-            totalconfirmed: parseInt(data.totalconfirmed, 10),
-            totaldeceased: parseInt(data.totaldeceased, 10),
-            totalrecovered: parseInt(data.totalrecovered, 10)
-          }
-        })
-        setRows(d)
-      })
+    // getDataFromAPI(dispatch);
   }, [])
   return (
+    
     <div className={classes.root}>
       <Grid container>
         <Grid item xs={12}  >

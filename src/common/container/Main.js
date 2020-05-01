@@ -1,6 +1,6 @@
 import React from 'react'
 
-function TotalReport() {
+function Main() {
     return (
         <div>
             
@@ -8,4 +8,4 @@ function TotalReport() {
     )
 }
 
-export default TotalReport
+export default Main

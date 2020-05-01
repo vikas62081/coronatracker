@@ -67,7 +67,7 @@ export default function TableTracker({rows}) {
                         <StyledTableCell >Death</StyledTableCell>
                         <StyledTableCell >Recovered</StyledTableCell>
                         <StyledTableCell >Active*</StyledTableCell>
-                        <StyledTableCell >*</StyledTableCell>
+                        {/* <StyledTableCell >*</StyledTableCell> */}
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -93,10 +93,10 @@ export default function TableTracker({rows}) {
                                 </span> : null}
                             </StyledTableCell>
                             <StyledTableCell >{row.active}</StyledTableCell>
-                            <StyledTableCell >
+                            {/* <StyledTableCell >
                                 {row.active > 0 ?<span className={classes.redIcons}>Not Free</span>
                                  :<span className={classes.greenIcons}>Free</span>}
-                            </StyledTableCell>
+                            </StyledTableCell> */}
                         </StyledTableRow>
                     ))}
                 </TableBody>
