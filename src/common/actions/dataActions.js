@@ -30,7 +30,8 @@ export const getDataFromAPI=(dispatch)=>{
                 deltarecovered: parseInt(data.deltarecovered, 10),
                 deltaconfirmed: parseInt(data.deltaconfirmed, 10),
                 deltadeaths:parseInt(data.deltadeaths, 10),
-                recovered: parseInt(data.recovered, 10)
+                recovered: parseInt(data.recovered, 10),
+                status:false
             }
         })
         dispatch({type:ADD_STATE_WISE,payload:stateWiseCases})

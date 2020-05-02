@@ -9,7 +9,10 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "bold"
     },
     marginBottom: {
-        paddingBottom: 20
+        paddingBottom: 20,
+        marginBottom:2,
+        borderRadius:3,
+        backgroundColor:'#3574b5'
     },
     text: {
         fontWeight: "bolder",
@@ -21,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     }
     ,
 }));
-function TotalRprt({ data }) {
+function TotalReport({ data }) {
     const classes = useStyles();
     return (
         <div>
@@ -74,8 +77,8 @@ function TotalRprt({ data }) {
             </Typography>
 
             </div>
-        </div>
+        </div> 
     )
 }
 
-export default TotalRprt;
+export default TotalReport;

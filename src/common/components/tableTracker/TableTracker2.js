@@ -14,6 +14,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
 // import Checkbox from '@material-ui/core/Checkbox';
 // import IconButton from '@material-ui/core/IconButton';
 // import Tooltip from '@material-ui/core/Tooltip';
@@ -22,7 +24,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 // import DeleteIcon from '@material-ui/icons/Delete';
 // import FilterListIcon from '@material-ui/icons/FilterList';
 import NumberFormat from 'react-number-format';
-import {addRowToSaveUser} from '../../actions/reducerActions'
+import {toggleHeart} from '../../actions/reducerActions'
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -51,7 +53,7 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'state', numeric: false, disablePadding: false, label: 'State' },
+  { id: 'state', numeric: false, disablePadding: true, label: 'State' },
   { id: 'confirmed', numeric: true, disablePadding: false, label: 'Confirmed' },
   { id: 'deaths', numeric: true, disablePadding: false, label: 'Deaths' },
   { id: 'recovered', numeric: true, disablePadding: false, label: 'Recovered' },
@@ -59,7 +61,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { classes, order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -74,6 +76,7 @@ function EnhancedTableHead(props) {
             // align={headCell.numeric ? 'right' : 'left'}
             // padding={headCell.disablePadding ? 'none' : 'default'}
             // sortDirection={orderBy === headCell.id ? order : false}
+            className={headCell.disablePadding ?'default':classes.tableCell}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -122,21 +125,23 @@ const useToolbarStyles = makeStyles((theme) => ({
     flex: '1 1 100%',
     fontSize: '150%',
     fontWeight: 600,
-    letterSpacing: '0.095em'
+    letterSpacing: '0.095em',
+    textDecoration: 'underline'
+    
   },
 }));
 
-const EnhancedTableToolbar = (props) => {
+const EnhancedTableToolbar = (props ) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+  const { numSelected,title} = props;
 
   return (
     <Toolbar
       className={clsx(classes.root, {
         [classes.highlight]: numSelected > 0,
       })}>
-      <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-        INDIA COVID-19 STATISTICS
+      <Typography className={classes.title} align='left' variant="h6" id="tableTitle" component="div">
+        {title===undefined?'INDIA COVID-19 STATISTICS':title}
         </Typography>
     </Toolbar>
   );
@@ -152,7 +157,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: '100%',
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(1),
   },
   table: {
     // minWidth: 750,
@@ -166,10 +171,24 @@ icons: {
     fontSize: "inherit",
     verticalAlign: -2,
 },
+heartIconsEmpty:{
+  fontSize: "150%",
+    verticalAlign: 'sub',
+    cursor: 'pointer'
+},
+heartIconsFill:{
+  fontSize: "150%",
+    verticalAlign: 'sub',
+    color:'#f11a55',
+    cursor: 'pointer'
+},
 greenIcons: {
     color: "green",
     fontSize: 11,
     paddingLeft:2
+},
+tableCell:{
+// padding:'12px 8px'
 },
   visuallyHidden: {
     border: 0,
@@ -184,11 +203,11 @@ greenIcons: {
   },
 }));
 
-export default function EnhancedTable({rows,dispatch}) {
+export default function TableTracker2({rows,dispatch,title}) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('');
-  const [selected, setSelected] = React.useState([]);
+  const [selected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(8);
 
@@ -198,18 +217,18 @@ export default function EnhancedTable({rows,dispatch}) {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
+  // const handleSelectAllClick = (event) => {
     // if (event.target.checked) {
     //   const newSelecteds = rows.map((n) => n.name);
     //   setSelected(newSelecteds);
     //   return;
     // }
     // setSelected([]);
-  };
+  // };
 
-  const handleClick = (event, row) => {
-    addRowToSaveUser(dispatch,row)
-
+  const handleClick = (event,row) => {
+    // addRowToSaveUser(dispatch,row)
+    toggleHeart(dispatch,row.id)
     // const selectedIndex = selected.indexOf(name);
     // let newSelected = [];
 
@@ -239,14 +258,14 @@ export default function EnhancedTable({rows,dispatch}) {
   };
 
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  // const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} title={title}/>
         <TableContainer>
           <Table
             className={classes.table}
@@ -259,7 +278,7 @@ export default function EnhancedTable({rows,dispatch}) {
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
+              // onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
@@ -267,8 +286,8 @@ export default function EnhancedTable({rows,dispatch}) {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+                  // const isItemSelected = isSelected(row.name);
+                  // const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
@@ -279,30 +298,34 @@ export default function EnhancedTable({rows,dispatch}) {
                     //   tabIndex={-1}
                       key={row.id}
                     >
-                      <TableCell component="th" scope="row" >{row.state}</TableCell>
-                      <TableCell >
+                      <TableCell component="th" scope="row" className={classes.tableCell} >
+                        {row.status===false?<FavoriteBorderOutlinedIcon className={classes.heartIconsEmpty}/>
+                       :<FavoriteOutlinedIcon className={classes.heartIconsFill}/>} {row.state}
+                        
+                      </TableCell>
+                      <TableCell className={classes.tableCell}>
                       <NumberFormat value={row.confirmed} displayType={'text'} thousandSeparator={true} />
                                 {row.deltaconfirmed > 0 ? <span className={classes.redIcons}>
                                     <ArrowUpwardIcon className={classes.icons} />{row.deltaconfirmed}
                                 </span> : null}</TableCell>
-                      <TableCell >
+                      <TableCell className={classes.tableCell}>
                       <NumberFormat value={row.deaths} displayType={'text'} thousandSeparator={true} />
                                 {row.deltadeaths > 0 ? <span className={classes.redIcons}>
                                     <ArrowUpwardIcon className={classes.icons} />{row.deltadeaths}
                                 </span> : null}</TableCell>
-                      <TableCell >
+                      <TableCell className={classes.tableCell}>
                       <NumberFormat value={row.recovered} displayType={'text'} thousandSeparator={true} />
                                 {row.deltarecovered > 0 ? <span className={classes.greenIcons}>
                                     <ArrowUpwardIcon className={classes.icons} />{row.deltarecovered}
                                 </span> : null}</TableCell>
-                      <TableCell >
+                      <TableCell className={classes.tableCell}>
                       <NumberFormat value={row.active} displayType={'text'} thousandSeparator={true} />
                       </TableCell>
                     </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
-                <TableRow style={{ height: (53) * emptyRows }}>
+                <TableRow style={{ height: emptyRows }}>
                   <TableCell colSpan={6} />
                 </TableRow>
               )}
