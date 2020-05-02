@@ -4,7 +4,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Grow from '@material-ui/core/Grow';
-export default function SimpleSnackbar({open,close}) {
+export default function SimpleSnackbar({open,close,isDataAdded}) {
 
   const handleClose = (event, reason) => {
     close()
@@ -21,7 +21,7 @@ export default function SimpleSnackbar({open,close}) {
         open={open}
         autoHideDuration={4000}
         onClose={handleClose}
-        message="You have changed Fab list"
+        message={isDataAdded?'Data added successfully :)':'Data removed successfully :)'}
         action={
           <React.Fragment>
             <Button color="secondary" size="small" onClick={handleClose}>

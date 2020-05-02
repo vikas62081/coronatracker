@@ -24,7 +24,7 @@ import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
 // import DeleteIcon from '@material-ui/icons/Delete';
 // import FilterListIcon from '@material-ui/icons/FilterList';
 import NumberFormat from 'react-number-format';
-import {toggleHeart} from '../../actions/reducerActions'
+import { toggleHeart } from '../../actions/reducerActions'
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -69,14 +69,14 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        
+
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
             // align={headCell.numeric ? 'right' : 'left'}
             // padding={headCell.disablePadding ? 'none' : 'default'}
             // sortDirection={orderBy === headCell.id ? order : false}
-            className={headCell.disablePadding ?'default':classes.tableCell}
+            className={headCell.disablePadding ? 'default' : classes.tableCell}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -114,26 +114,26 @@ const useToolbarStyles = makeStyles((theme) => ({
   highlight:
     theme.palette.type === 'light'
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
+        color: theme.palette.secondary.main,
+        backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+      }
       : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.secondary.dark,
+      },
   title: {
     flex: '1 1 100%',
     fontSize: '150%',
     fontWeight: 600,
     letterSpacing: '0.095em',
     textDecoration: 'underline'
-    
+
   },
 }));
 
-const EnhancedTableToolbar = (props ) => {
+const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected,title} = props;
+  const { numSelected, title } = props;
 
   return (
     <Toolbar
@@ -141,8 +141,8 @@ const EnhancedTableToolbar = (props ) => {
         [classes.highlight]: numSelected > 0,
       })}>
       <Typography className={classes.title} align='left' variant="h6" id="tableTitle" component="div">
-        {title===undefined?'INDIA COVID-19 STATISTICS':title}
-        </Typography>
+        {title === undefined ? 'INDIA COVID-19 STATISTICS' : title}
+      </Typography>
     </Toolbar>
   );
 };
@@ -165,31 +165,31 @@ const useStyles = makeStyles((theme) => ({
   redIcons: {
     color: "red",
     fontSize: 11,
-   paddingLeft:2 // padding: "0 6px"
-},
-icons: {
+    paddingLeft: 2 // padding: "0 6px"
+  },
+  icons: {
     fontSize: "inherit",
     verticalAlign: -2,
-},
-heartIconsEmpty:{
-  fontSize: "150%",
+  },
+  heartIconsEmpty: {
+    fontSize: "150%",
     verticalAlign: 'sub',
     cursor: 'pointer'
-},
-heartIconsFill:{
-  fontSize: "150%",
+  },
+  heartIconsFill: {
+    fontSize: "150%",
     verticalAlign: 'sub',
-    color:'#f11a55',
+    color: '#f11a55',
     cursor: 'pointer'
-},
-greenIcons: {
+  },
+  greenIcons: {
     color: "green",
     fontSize: 11,
-    paddingLeft:2
-},
-tableCell:{
-// padding:'12px 8px'
-},
+    paddingLeft: 2
+  },
+  tableCell: {
+    // padding:'12px 8px'
+  },
   visuallyHidden: {
     border: 0,
     clip: 'rect(0 0 0 0)',
@@ -203,7 +203,7 @@ tableCell:{
   },
 }));
 
-export default function TableTracker2({rows,dispatch,title}) {
+export default function TableTracker2({ rows, dispatch, title }) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('');
@@ -218,17 +218,17 @@ export default function TableTracker2({rows,dispatch,title}) {
   };
 
   // const handleSelectAllClick = (event) => {
-    // if (event.target.checked) {
-    //   const newSelecteds = rows.map((n) => n.name);
-    //   setSelected(newSelecteds);
-    //   return;
-    // }
-    // setSelected([]);
+  // if (event.target.checked) {
+  //   const newSelecteds = rows.map((n) => n.name);
+  //   setSelected(newSelecteds);
+  //   return;
+  // }
+  // setSelected([]);
   // };
 
-  const handleClick = (event,row) => {
+  const handleClick = (event, row) => {
     // addRowToSaveUser(dispatch,row)
-    toggleHeart(dispatch,row.id)
+    toggleHeart(dispatch, row.id)
     // const selectedIndex = selected.indexOf(name);
     // let newSelected = [];
 
@@ -265,7 +265,7 @@ export default function TableTracker2({rows,dispatch,title}) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} title={title}/>
+        <EnhancedTableToolbar numSelected={selected.length} title={title} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -292,34 +292,36 @@ export default function TableTracker2({rows,dispatch,title}) {
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row)}
-                    //   role="checkbox"
-                    //   aria-checked={isItemSelected}
-                    //   tabIndex={-1}
+                      //   role="checkbox"
+                      //   aria-checked={isItemSelected}
+                      //   tabIndex={-1}
                       key={row.id}
                     >
-                      <TableCell component="th" scope="row" className={classes.tableCell} >
-                        {row.status===false?<FavoriteBorderOutlinedIcon className={classes.heartIconsEmpty}/>
-                       :<FavoriteOutlinedIcon className={classes.heartIconsFill}/>} {row.state}
-                        
+                      <TableCell component="th" scope="row" className={classes.tableCell}>
+                        {row.status === false ?
+                          <FavoriteBorderOutlinedIcon onClick={(event) => handleClick(event, row)}
+                            className={classes.heartIconsEmpty} />
+                          : <FavoriteOutlinedIcon onClick={(event) => handleClick(event, row)}
+                            className={classes.heartIconsFill} />}
+                        {row.state}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                      <NumberFormat value={row.confirmed} displayType={'text'} thousandSeparator={true} />
-                                {row.deltaconfirmed > 0 ? <span className={classes.redIcons}>
-                                    <ArrowUpwardIcon className={classes.icons} />{row.deltaconfirmed}
-                                </span> : null}</TableCell>
+                        <NumberFormat value={row.confirmed} displayType={'text'} thousandSeparator={true} />
+                        {row.deltaconfirmed > 0 ? <span className={classes.redIcons}>
+                          <ArrowUpwardIcon className={classes.icons} />{row.deltaconfirmed}
+                        </span> : null}</TableCell>
                       <TableCell className={classes.tableCell}>
-                      <NumberFormat value={row.deaths} displayType={'text'} thousandSeparator={true} />
-                                {row.deltadeaths > 0 ? <span className={classes.redIcons}>
-                                    <ArrowUpwardIcon className={classes.icons} />{row.deltadeaths}
-                                </span> : null}</TableCell>
+                        <NumberFormat value={row.deaths} displayType={'text'} thousandSeparator={true} />
+                        {row.deltadeaths > 0 ? <span className={classes.redIcons}>
+                          <ArrowUpwardIcon className={classes.icons} />{row.deltadeaths}
+                        </span> : null}</TableCell>
                       <TableCell className={classes.tableCell}>
-                      <NumberFormat value={row.recovered} displayType={'text'} thousandSeparator={true} />
-                                {row.deltarecovered > 0 ? <span className={classes.greenIcons}>
-                                    <ArrowUpwardIcon className={classes.icons} />{row.deltarecovered}
-                                </span> : null}</TableCell>
+                        <NumberFormat value={row.recovered} displayType={'text'} thousandSeparator={true} />
+                        {row.deltarecovered > 0 ? <span className={classes.greenIcons}>
+                          <ArrowUpwardIcon className={classes.icons} />{row.deltarecovered}
+                        </span> : null}</TableCell>
                       <TableCell className={classes.tableCell}>
-                      <NumberFormat value={row.active} displayType={'text'} thousandSeparator={true} />
+                        <NumberFormat value={row.active} displayType={'text'} thousandSeparator={true} />
                       </TableCell>
                     </TableRow>
                   );
