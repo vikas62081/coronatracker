@@ -10,9 +10,10 @@ import {useDispatch,useSelector} from 'react-redux'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    
   },
   paper: {
-    padding: theme.spacing(1),
+    margin: 4,
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
@@ -25,25 +26,25 @@ export default function Combine() {
   const tableData = useSelector((state)=>state.stateWiseReport);
 
   useEffect(() => {
-    // getDataFromAPI(dispatch);
+    getDataFromAPI(dispatch);
   }, [])
   return (
     
     <div className={classes.root}>
       <Grid container>
-        <Grid item xs={12}  >
+        <Grid item xs={12}>
           <Paper className={classes.paper}>
             {rows && <DailyGraph rows={rows} />}
           </Paper>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        {/* <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
             {tableData && <TableTracker rows={tableData} />}
           </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
+        </Grid> */}
+        <Grid item xs={12} >
           <Paper className={classes.paper}>
-            {rows && <TotalGraph rows={rows} />}
+          {rows && <TotalGraph rows={rows} />}
           </Paper>
         </Grid>
       </Grid>

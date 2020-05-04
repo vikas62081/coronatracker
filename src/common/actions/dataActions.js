@@ -1,16 +1,18 @@
-import React from 'react'
 import Axios from 'axios'
 import { v4 as uuid } from 'uuid';
+import * as moment from "moment/moment.js"
 import {
     ADD_STATE_WISE,
     ADD_DAILY_CASES,
     TOTAL_CASES
 } from './actionTypes'
 export const getDataFromAPI = (dispatch) => {
-    const userData = JSON.parse(localStorage.getItem('userFav'));
+    const getHistory=localStorage.getItem('userFav')
+    const userData = getHistory===null?[]:JSON.parse(getHistory);
     const isExist = {
         status: false
     }
+    const dateFormatter='D MMM YYYY'
     Axios.get('https://api.covid19india.org/data.json')
         .then(response => {
             const { cases_time_series, statewise } = response.data
@@ -20,6 +22,7 @@ export const getDataFromAPI = (dispatch) => {
                 return {
                     ...data,
                     id: uuid(),
+                    date:moment(`${data.date}2020`).format(dateFormatter),
                     dailyconfirmed: parseInt(data.dailyconfirmed, 10),
                     dailydeceased: parseInt(data.dailydeceased, 10),
                     dailyrecovered: parseInt(data.dailyrecovered, 10),
@@ -29,13 +32,16 @@ export const getDataFromAPI = (dispatch) => {
                 }
             })
             dispatch({ type: ADD_DAILY_CASES, payload: dailyCases })
-            const stateWiseCases = statewise.map(data => {
+            const stateWiseCases = statewise.filter(dt=>dt.confirmed!=="0").map(data => {
                 isExist.status = false
-                userData.map(dt => {
-                    if (dt.statecode === data.statecode) {
-                        return isExist.status = true
-                    }
-                })
+                // userData.map(statecode => {
+                //     if (statecode === data.statecode) {
+                //         return isExist.status = true
+                //     }
+                // })
+                if(userData.includes(data.statecode)){
+                    isExist.status = true
+                }
                 return {
                     ...data,
                     id: uuid(),

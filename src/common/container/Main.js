@@ -54,7 +54,8 @@ export default function Main() {
         dispatch(addRowToSaveUser(dispatch, userSavedData))
         setUserData(userSavedData)
         setTimeout(() => {
-            localStorage.setItem('userFav', JSON.stringify(userSavedData))
+            const savedStateCode=userSavedData.map(dt=>{return dt.statecode})
+            localStorage.setItem('userFav', JSON.stringify(savedStateCode))
         }, 200);
     }, [tableData])
     const handleClose = (event, reason) => {
@@ -76,7 +77,7 @@ export default function Main() {
                 <Grid item xs>
                     <Paper className={classes.paper}>
                         {/* {tableData && <TableTracker rows={tableData} />} */}
-                        {userData && userData.length > 0 && <TableTracker2 rows={userData} dispatch={dispatch} title='Saved' />}
+                        {userData && userData.length > 0 && <TableTracker2 rows={userData} dispatch={dispatch} title='WATCHLIST' />}
                         {tableData && <TableTracker2 rows={tableData} dispatch={dispatch} />}
                     </Paper>
                 </Grid>

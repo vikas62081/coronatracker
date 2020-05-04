@@ -298,11 +298,11 @@ export default function TableTracker2({ rows, dispatch, title }) {
                       key={row.id}
                     >
                       <TableCell component="th" scope="row" className={classes.tableCell}>
-                        {row.status === false ?
+                        {row.state!=="Total"?(row.status === false ?
                           <FavoriteBorderOutlinedIcon onClick={(event) => handleClick(event, row)}
                             className={classes.heartIconsEmpty} />
                           : <FavoriteOutlinedIcon onClick={(event) => handleClick(event, row)}
-                            className={classes.heartIconsFill} />}
+                            className={classes.heartIconsFill} />):null}
                         {row.state}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
