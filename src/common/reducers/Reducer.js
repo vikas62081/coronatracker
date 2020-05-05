@@ -2,12 +2,14 @@ import {ADD_DAILY_CASES,
     ADD_STATE_WISE,
     TOTAL_CASES,
 ADD_ROW_TO_SAVE_USER,
-TOGGLE_HEART} from '../actions/actionTypes'
+TOGGLE_HEART,ADD_DISTRICT_WISE,
+ADD_ZONE_DATA} from '../actions/actionTypes'
 const initialState={
     stateWiseReport:[],
     dailyReport:[],
     totalReport:{},
     savedByUser:[],
+    districtWiseReport:null
 }
 
 
@@ -35,6 +37,10 @@ const Reducer=(state=initialState,action)=> {
             }
         case ADD_ROW_TO_SAVE_USER:
             return {...state,savedByUser:payload}
+        case ADD_ZONE_DATA:
+            return {...state,stateZone:payload}
+        case ADD_DISTRICT_WISE:
+            return {...state,districtWiseReport:payload}
         default:
             return state;
     

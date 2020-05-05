@@ -21,8 +21,10 @@ function TotalGraph({ rows }) {
         // labelFormat: '${value}K'
     };
     useEffect(() => {
-        setGraphData(rows)
+        setTimeout(()=>{
+            setGraphData(rows)
         handleChangeDataToShow('',1)
+        },50)
     }, [rows])
     const handleChange = (event, newValue) => {
         seIsLogarithmic(newValue);

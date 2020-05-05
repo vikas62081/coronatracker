@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import TableTracker from '../components/tableTracker/TableTracker';
+// import TableTracker from '../components/tableTracker/TableTracker';
 import DailyGraph from '../components/graphs/dailyReport/DailyGraph';
 import TotalGraph from '../components/graphs/totalGraph/TotalGraph';
-import {getDataFromAPI} from '../actions/dataActions'
+// import {getDataFromAPI} from '../actions/dataActions'
 import {useDispatch,useSelector} from 'react-redux'
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,13 +21,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Combine() {
   const classes = useStyles();
-  const dispatch=useDispatch();
   const rows = useSelector((state)=>state.dailyReport);
-  const tableData = useSelector((state)=>state.stateWiseReport);
+  // const tableData = useSelector((state)=>state.stateWiseReport);
 
-  useEffect(() => {
-    getDataFromAPI(dispatch);
-  }, [])
   return (
     
     <div className={classes.root}>

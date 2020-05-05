@@ -15,14 +15,17 @@ function DailyGraph({rows}) {
     const [isLogarithmic, seIsLogarithmic] = useState(0);
     const [dataToShow, setDataToShow] = useState(1);
     const primaryyAxis = {
-        title: "Total Coronavirus cases",
+        title: "Daily Coronavirus cases",
         valueType: isLogarithmic === 1 ? 'Logarithmic' : 'Double',
         // labelPlacement:'OnTicks'
         // labelFormat: '${value}K'
     };
     useEffect(() => {
-        setGraphData(rows)
+        setTimeout(() => {
+            setGraphData(rows)
         handleChangeDataToShow('',1)
+        }, 50);
+        
     }, [rows])
     const handleChange = (event, newValue) => {
         seIsLogarithmic(newValue);

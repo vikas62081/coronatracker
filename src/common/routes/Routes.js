@@ -1,5 +1,5 @@
-import Home from "../container/Home";
 import Combine from "../container/Combine";
+import Home from "../container/Home";
 
 export const routes = [
   {
