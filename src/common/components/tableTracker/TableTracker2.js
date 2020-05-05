@@ -25,6 +25,8 @@ import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
 // import FilterListIcon from '@material-ui/icons/FilterList';
 import NumberFormat from 'react-number-format';
 import { toggleHeart } from '../../actions/reducerActions'
+import { Link } from 'react-router-dom';
+
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -303,7 +305,11 @@ export default function TableTracker2({ rows, dispatch, title }) {
                             className={classes.heartIconsEmpty} />
                           : <FavoriteOutlinedIcon onClick={(event) => handleClick(event, row)}
                             className={classes.heartIconsFill} />):null}
-                        {row.state}
+                        {row.state!=='Total'?<Link color="inherit" className={classes.link} to={`/district/${row.state}`}>{row.state}</Link>
+                        :row.state
+                        }
+                        
+                        {/* <div component={Link} to={`/district/${row.state}`}>{row.state}</div> */}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
                         <NumberFormat value={row.confirmed} displayType={'text'} thousandSeparator={true} />

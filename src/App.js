@@ -16,7 +16,7 @@ function App() {
       <Provider store={store}>
         <div className="App">
           <Main/>
-          <District/>
+          {/* <District/> */}
         </div>
       </Provider>
   );

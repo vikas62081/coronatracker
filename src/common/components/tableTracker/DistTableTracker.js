@@ -16,6 +16,7 @@ import Paper from '@material-ui/core/Paper';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 // import Checkbox from '@material-ui/core/Checkbox';
 // import IconButton from '@material-ui/core/IconButton';
 // import Tooltip from '@material-ui/core/Tooltip';
@@ -25,6 +26,8 @@ import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
 // import FilterListIcon from '@material-ui/icons/FilterList';
 import NumberFormat from 'react-number-format';
 import { toggleHeart } from '../../actions/reducerActions'
+import {Link} from 'react-router-dom'
+import BackspaceIcon from '@material-ui/icons/Backspace';
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -139,6 +142,9 @@ const EnhancedTableToolbar = (props) => {
       className={clsx(classes.root, {
         [classes.highlight]: numSelected > 0,
       })}>
+        <Link to='/' style={{marginRight:8}} title="Go Back">
+        <BackspaceIcon style={{color:'#3f51b5'}}/>
+      </Link>
       <Typography className={classes.title} align='left' variant="h6" id="tableTitle" component="div">
         {title} COVID-19 STATISTICS
       </Typography>

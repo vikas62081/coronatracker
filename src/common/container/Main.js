@@ -7,7 +7,7 @@ import { routes } from '../routes/Routes'
 import Header from '../components/layout/Header'
 function Main() {
     const dispatch = useDispatch()
-    useEffect(() => {
+    React.useEffect(() => {
         getDataFromAPI(dispatch);
     }, [])
     return (

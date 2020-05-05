@@ -33,7 +33,7 @@ function DailyGraph({rows}) {
     const handleChangeDataToShow = (event, newValue) => {
         setDataToShow(newValue);
         if (newValue === 2) {
-            const weekBefore = moment().subtract(7, 'days').format('D MMM YYYY')
+            const weekBefore = moment().subtract(2, 'weeks').format('D MMM YYYY')
             const week = rows.filter(row => moment(weekBefore).isBefore(row.date)
                 || moment(weekBefore).isSame(row.date))
             setGraphData(week)
@@ -86,7 +86,7 @@ function DailyGraph({rows}) {
                 onChange={handleChangeDataToShow}>
                 <Tab label="all" />
                 <Tab label="Last month" />
-                <Tab label='Last Week' />
+                <Tab label='Last 2 Weeks' />
             </Tabs>
         </div>
     )

@@ -1,6 +1,6 @@
 import Combine from "../container/Combine";
 import Home from "../container/Home";
-
+import District from '../container/District'
 export const routes = [
   {
     path: "/",
@@ -11,5 +11,10 @@ export const routes = [
     path: "/map",
     exact: true,
     component: Combine
+  },
+  {
+    path: `/district/:state`,
+    exact: true,
+    component: District
   },
 ]
