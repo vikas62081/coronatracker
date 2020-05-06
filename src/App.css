@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+
+.Red{
+  color:red;
+    font-size: 180%;
+    vertical-align: bottom;
+}
+.Green{
+  color:green;
+    font-size: 180%;
+    vertical-align: bottom;
+}
+.Orange{
+  color:orange;
+    font-size: 180%;
+    vertical-align: bottom;
+}

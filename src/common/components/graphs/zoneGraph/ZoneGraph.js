@@ -5,39 +5,50 @@ import {
     AccumulationSeriesDirective, Inject, AccumulationLegend, AccumulationTooltip,
     AccumulationDataLabel
 } from '@syncfusion/ej2-react-charts';
-import { JHAR, ZONES } from '../../../actions/const'
-export const ZoneGraph = () => {
-    // const dataSource = [
-    //         { x: 'Jan', y: 3, text: 'Jan: 3' }, { x: 'Feb', y: 3.5, text: 'Feb: 3.5' },
-    //         { x: 'Mar', y: 7, text: 'Mar: 7' }, { x: 'Apr', y: 13.5, text: 'Apr: 13.5' },
-    //         { x: 'May', y: 19, text: 'May: 19' }, { x: 'Jun', y: 23.5, text: 'Jun: 23.5' },
-    //         { x: 'Jul', y: 26, text: 'Jul: 26' }, { x: 'Aug', y: 25, text: 'Aug: 25' },
-    //         { x: 'Sep', y: 21, text: 'Sep: 21' }, { x: 'Oct', y: 15, text: 'Oct: 15' },
-    //         { x: 'Nov', y: 9, text: 'Nov: 9' }, { x: 'Dec', y: 3.5, text: 'Dec: 3.5' }
-    //     ];
-    const jharlen = JHAR.length
-    console.log(jharlen)
-    const zoneInfo = JHAR.reduce((ddd, dd) => {
+export const ZoneGraph = ({state,stateName}) => {
+    const jharlen = state.length
+    const zoneInfo = state.reduce((ddd, dd) => {
         const { zone } = dd
         ddd[zone] = ddd[zone] ? [...ddd[zone], dd] : [dd]
         return ddd;
     }, {})
-    const d = [{ zone: 'Orange', value: ((zoneInfo.Orange.length / jharlen) * 100).toFixed(0) },
-    { zone: 'Red', value: ((zoneInfo.Red.length / jharlen) * 100).toFixed(0) },
-    { zone: 'Green', value: ((zoneInfo.Green.length / jharlen) * 100).toFixed(0) }]
+
+    const d = [
+        { 
+        zone: 'Orange',
+         value: ((zoneInfo.Orange.length / jharlen) * 100).toFixed(0),
+         text: ((zoneInfo.Orange.length / jharlen) * 100).toFixed(0)+'%',
+        numberOfDist:`District :  ${zoneInfo.Orange.length}`},
+        { zone: 'Red',
+        value: ((zoneInfo.Red.length / jharlen) * 100).toFixed(0),
+        text: ((zoneInfo.Red.length / jharlen) * 100).toFixed(0)+'%',
+        numberOfDist:`District :  ${zoneInfo.Red.length}`},
+        { zone: 'Green',
+        value: ((zoneInfo.Green.length / jharlen) * 100).toFixed(0),
+        text: ((zoneInfo.Green.length / jharlen) * 100).toFixed(0)+'%',
+        numberOfDist: `District :  ${zoneInfo.Green.length}`}
+    ]
     const datalabel = { visible: true,
         position: 'Inside', 
-        // name: 'text',
+        name:'numberOfDist',
+
         font: {
-            fontWeight: '600'
+            fontWeight: '600',
+            fontSize:20
         }};
-    const tooltip = { enable: true }
-    const legendSettings = { position: 'Bottom', visible: true };
+        const title=`District Zones Of ${stateName}`
+    const tooltip={ enable: true,
+         format: '${point.x} : <b>${point.y}%</b>' }
+    const legendSettings = { position: 'Bottom', visible: false };
+    const palette = [ "#ff9900", "#E94649","#8fda1f",]
         return (
-        <AccumulationChartComponent id='charts' legendSettings={legendSettings}>
-        <Inject services={[AccumulationLegend]}/>
+        <AccumulationChartComponent id='charts' title={title}  legendSettings={legendSettings} enableSmartLabels={true} tooltip={tooltip}>
+        <Inject services={[AccumulationLegend,AccumulationDataLabel,AccumulationTooltip]}/>
         <AccumulationSeriesCollectionDirective>
-          <AccumulationSeriesDirective dataSource={d} xName='zone' yName='value' legendShape='Circle'></AccumulationSeriesDirective>
+          <AccumulationSeriesDirective palettes={palette}
+           dataSource={d} xName='zone' yName='value' dataLabel={datalabel}
+            legendShape='Circle'>
+            </AccumulationSeriesDirective>
         </AccumulationSeriesCollectionDirective>
       </AccumulationChartComponent>
     )

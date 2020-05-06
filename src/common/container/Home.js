@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import TotalReport from '../components/totalReport/TotalReport';
 import { addRowToSaveUser } from '../actions/reducerActions'
 import SimpleSnackbar from '../components/alert/SimpleSnackbar';
+import Progress  from '../components/progress/Progress'
 const useStyles = makeStyles((theme) => ({
     root: {
         // flexGrow: 1,
@@ -67,21 +68,23 @@ export default function Home() {
     return (
         <div className={classes.root}>
             <SimpleSnackbar open={open} close={handleClose} isDataAdded={isDataAdded} />
-            <Grid container spacing={1} direction="row"
+            {tableData.length?<Grid container spacing={1} direction="row"
                 justify="flex-start" alignItems="stretch" className={classes.container}>
                 <Grid item sm={3} xs={12}>
                     <Paper className={classes.paper}>
-                        {totalData && <TotalReport data={totalData} />}
+                        {totalData&& <TotalReport data={totalData} />}
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.paper}>
                         {/* {tableData && <TableTracker rows={tableData} />} */}
-                        {userData && userData.length > 0 && <TableTracker2 rows={userData} dispatch={dispatch} title='WATCHLIST' />}
+                        {userData&&userData.length?
+                        <TableTracker2 rows={userData} dispatch={dispatch} title='WATCHLIST' />:null}
                         {tableData && <TableTracker2 rows={tableData} dispatch={dispatch} />}
                     </Paper>
                 </Grid>
-            </Grid>
+            </Grid>:<Progress/>
+        }
         </div>
     );
 }

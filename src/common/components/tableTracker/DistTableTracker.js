@@ -28,6 +28,8 @@ import NumberFormat from 'react-number-format';
 import { toggleHeart } from '../../actions/reducerActions'
 import {Link} from 'react-router-dom'
 import BackspaceIcon from '@material-ui/icons/Backspace';
+import ErrorTwoToneIcon from '@material-ui/icons/ErrorTwoTone';
+import ErrorSharpIcon from '@material-ui/icons/ErrorSharp';
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -56,9 +58,9 @@ function stableSort(array, comparator) {
 
 const headCells = [
   { id: 'district', numeric: false, disablePadding: true, label: 'District' },
-  { id: 'confirmed', numeric: true, disablePadding: false, label: 'Confirmed' },
+  { id: 'confirmed', numeric: true, disablePadding: false, label: 'Cnf' },
   { id: 'deceased', numeric: true, disablePadding: false, label: 'Deaths' },
-  { id: 'recovered', numeric: true, disablePadding: false, label: 'Recovered' },
+  { id: 'recovered', numeric: true, disablePadding: false, label: 'Recd' },
   { id: 'active', numeric: true, disablePadding: false, label: 'Active' },
 ];
 
@@ -193,7 +195,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 2
   },
   tableCell: {
-    // padding:'12px 8px'
+    padding:'8px 5px'
   },
   visuallyHidden: {
     border: 0,
@@ -208,11 +210,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DistTableTracker({ rows, dispatch }) {
+export default function DistTableTracker({ rows,stateName, dispatch }) {
   const classes = useStyles();
-  const title=rows.state
-  const stateCode=rows.statecode
-  rows=rows.districtData
+  const title=stateName
   const [order, setOrder] = React.useState('desc');
   const [orderBy, setOrderBy] = React.useState('confirmed');
   const [selected] = React.useState([]);
@@ -297,7 +297,8 @@ export default function DistTableTracker({ rows, dispatch }) {
                   // const isItemSelected = isSelected(row.name);
                   // const labelId = `enhanced-table-checkbox-${index}`;
 const {confirmed:deltaconfirmed,deceased:deltadeaths,recovered:deltarecovered}=row.delta
-                  return (
+          const {zone}=row     
+return (
                     
                     <TableRow
                       hover
@@ -306,12 +307,13 @@ const {confirmed:deltaconfirmed,deceased:deltadeaths,recovered:deltarecovered}=r
                       //   tabIndex={-1}
                       key={index}
                     >
-                      <TableCell component="th" scope="row" className={classes.tableCell}>
+                      <TableCell component="th" scope="row" title={`${row.district} is in ${zone} zone`} className={classes.tableCell}>
                         {/* {(row.status === false ?
                           <FavoriteBorderOutlinedIcon onClick={(event) => handleClick(event, row)}
                             className={classes.heartIconsEmpty} />
                           : <FavoriteOutlinedIcon onClick={(event) => handleClick(event, row)}
                             className={classes.heartIconsFill} />)} */}
+                            <ErrorTwoToneIcon className={zone}/>
                         {row.district}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
