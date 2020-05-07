@@ -19,6 +19,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InfoIcon from '@material-ui/icons/Info';
 import Sidebar from './Sidebar';
+import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -67,12 +68,10 @@ export default function Header() {
             </List>
             <Divider />
             <List>
-                {['About', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InfoIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
+               <ListItem button component={Link} to='/about' title="About">
+                        <ListItemIcon><InfoIcon /></ListItemIcon>
+                        <ListItemText primary='About' />
                     </ListItem>
-                ))}
             </List>
         </div>
     );

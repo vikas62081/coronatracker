@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 // import TableTracker from '../components/tableTracker/TableTracker';
 import DailyGraph from '../components/graphs/dailyReport/DailyGraph';
 import TotalGraph from '../components/graphs/totalGraph/TotalGraph';
+import Progress from '../components/progress/Progress'
 // import {getDataFromAPI} from '../actions/dataActions'
 import {useDispatch,useSelector} from 'react-redux'
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +28,7 @@ export default function Combine() {
   return (
     
     <div className={classes.root}>
-      <Grid container>
+      {rows.length?<Grid container>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             {rows && <DailyGraph rows={rows} />}
@@ -43,7 +44,7 @@ export default function Combine() {
           {rows && <TotalGraph rows={rows} />}
           </Paper>
         </Grid>
-      </Grid>
+      </Grid>:<Progress/>}
     </div>
   );
 }

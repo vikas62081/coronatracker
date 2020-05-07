@@ -18,7 +18,7 @@ import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutline
 import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 // import Checkbox from '@material-ui/core/Checkbox';
-// import IconButton from '@material-ui/core/IconButton';
+import IconButton from '@material-ui/core/IconButton';
 // import Tooltip from '@material-ui/core/Tooltip';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 // import Switch from '@material-ui/core/Switch';
@@ -145,7 +145,12 @@ const EnhancedTableToolbar = (props) => {
         [classes.highlight]: numSelected > 0,
       })}>
         <Link to='/' style={{marginRight:8}} title="Go Back">
-        <BackspaceIcon style={{color:'#3f51b5'}}/>
+        <IconButton edge="end"
+                        aria-label="account of current user"
+                        aria-haspopup="true"
+                        color="inherit" >
+                        <BackspaceIcon />
+                    </IconButton>
       </Link>
       <Typography className={classes.title} align='left' variant="h6" id="tableTitle" component="div">
         {title} COVID-19 STATISTICS
@@ -305,9 +310,10 @@ return (
                       //   role="checkbox"
                       //   aria-checked={isItemSelected}
                       //   tabIndex={-1}
+                      title={`${row.district} is in ${zone} zone`}
                       key={index}
                     >
-                      <TableCell component="th" scope="row" title={`${row.district} is in ${zone} zone`} className={classes.tableCell}>
+                      <TableCell component="th" scope="row" className={classes.tableCell}>
                         {/* {(row.status === false ?
                           <FavoriteBorderOutlinedIcon onClick={(event) => handleClick(event, row)}
                             className={classes.heartIconsEmpty} />

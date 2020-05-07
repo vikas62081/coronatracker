@@ -7,13 +7,13 @@ import { routes } from '../routes/Routes'
 import Header from '../components/layout/Header'
 function Main() {
     const dispatch = useDispatch()
-    React.useEffect(() => {
+    useEffect(() => {
         getDataFromAPI(dispatch);
-    }, [])
+    },[])
     return (
         <div>
             <Router>
-                <Header />
+            <Header />
                 <Switch>
                     {routes.map((route) => <Route key={route.path} {...route} />)}
                 </Switch>
