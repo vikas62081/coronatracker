@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import {ORANGE,RED,GREEN} from '../../../actions/const'
 import {
     AccumulationChartComponent, AccumulationSeriesCollectionDirective,
     AccumulationSeriesDirective, Inject, AccumulationLegend, AccumulationTooltip,
@@ -15,15 +16,15 @@ export const ZoneGraph = ({state,stateName}) => {
 
     const d = [
         { 
-        zone: 'Orange',
+        zone: ORANGE,
          value: ((zoneInfo.Orange.length / jharlen) * 100).toFixed(0),
          text: ((zoneInfo.Orange.length / jharlen) * 100).toFixed(0)+'%',
         numberOfDist:`District :  ${zoneInfo.Orange.length}`},
-        { zone: 'Red',
+        { zone: RED,
         value: ((zoneInfo.Red.length / jharlen) * 100).toFixed(0),
         text: ((zoneInfo.Red.length / jharlen) * 100).toFixed(0)+'%',
         numberOfDist:`District :  ${zoneInfo.Red.length}`},
-        { zone: 'Green',
+        { zone: GREEN,
         value: ((zoneInfo.Green.length / jharlen) * 100).toFixed(0),
         text: ((zoneInfo.Green.length / jharlen) * 100).toFixed(0)+'%',
         numberOfDist: `District :  ${zoneInfo.Green.length}`}

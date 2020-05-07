@@ -1,11 +1,12 @@
 import Axios from 'axios'
 import { v4 as uuid } from 'uuid';
 import * as moment from "moment/moment.js"
-import {DATE_FORMATTER,STATE_OF_INDIA} from './const'
+import { DATE_FORMATTER, STATE_OF_INDIA } from './const'
 import {
     ADD_STATE_WISE,
     ADD_DAILY_CASES,
-    TOTAL_CASES,ADD_ZONE_DATA,ADD_DISTRICT_WISE
+    TOTAL_CASES, ADD_ZONE_DATA,
+     ADD_DISTRICT_WISE,WORLD_TOTAL_CASES
 } from './actionTypes'
 export const getDataFromAPI = (dispatch) => {
     console.log("API called")
@@ -17,8 +18,9 @@ export const getDataFromAPI = (dispatch) => {
     Promise.all([
         Axios.get('https://api.covid19india.org/data.json'),
         Axios.get('https://api.covid19india.org/zones.json'),
-        Axios.get('https://api.covid19india.org/v2/state_district_wise.json')
-      ]).then(([response,zoneData,districtData])=>{
+        Axios.get('https://api.covid19india.org/v2/state_district_wise.json'),
+        Axios.get('https://api.covid19api.com/summary')
+    ]).then(([response, zoneData, districtData, worldData]) => {
         const { cases_time_series, statewise } = response.data
         const { zones } = zoneData.data
 
@@ -56,16 +58,20 @@ export const getDataFromAPI = (dispatch) => {
         })
         dispatch({ type: ADD_STATE_WISE, payload: stateWiseCases })
         dispatch({ type: TOTAL_CASES, payload: stateWiseCases[0] })
-        dispatch({type:ADD_ZONE_DATA,payload:zones})
-        dispatch({type:ADD_DISTRICT_WISE,payload:districtData.data})
+        dispatch({ type: ADD_ZONE_DATA, payload: zones })
+        dispatch({ type: ADD_DISTRICT_WISE, payload: districtData.data })
         // const aa=zoneInfo.Jharkhand.reduce((ddd,dd)=>{
         //     const {zone}=dd
         //     ddd[zone]=ddd[zone]?[...ddd[zone],dd]:[dd]
         //     return ddd;
         // },{})
         // console.log(aa)
-      })
-    
+        // console.log(worldData.data)
+        const { Global, Date } = worldData.data
+        dispatch({type:WORLD_TOTAL_CASES,payload:convertWorldData(Global,Date)})
+
+    })
+
 }
 // This URL can be used for total district details
 // https://api.covid19india.org/districts_daily.json
@@ -75,3 +81,18 @@ export const getDataFromAPI = (dispatch) => {
 //     zones[state]=zones[state]?[...zones[state],zone] : [zone]
 //     return zones;
 // },[])
+const convertWorldData=(Global,date)=>{
+    const { NewConfirmed, NewDeaths,
+        NewRecovered, TotalConfirmed,
+        TotalDeaths, TotalRecovered } = Global
+    return {
+        confirmed:TotalConfirmed,
+        deaths:TotalDeaths,
+        active:(TotalConfirmed-(TotalDeaths+TotalRecovered)),
+        recovered:TotalRecovered,
+        deltaconfirmed:NewConfirmed,
+        deltadeaths:NewDeaths,
+        deltarecovered:NewRecovered,
+        lastupdatedtime: moment(date).format('DD/MM/YYYY hh:mm:ss')
+    }
+}

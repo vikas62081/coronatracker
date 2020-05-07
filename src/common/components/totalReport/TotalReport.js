@@ -24,12 +24,12 @@ const useStyles = makeStyles((theme) => ({
     }
     ,
 }));
-function TotalReport({ data }) {
+function TotalReport({ data,title }) {
     const classes = useStyles();
     return (
         <div>
             <Typography variant="h3" className={classes.h4} style={{ color: "rgb(239, 239, 247)" }}>
-                Quick Facts
+                {title===undefined?'Quick Facts':title}
         </Typography>
             <Typography variant="overline" display="block" gutterBottom
                 style={{ color: "rgb(239, 239, 247)" }}>

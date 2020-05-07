@@ -86,7 +86,7 @@ export default function Header() {
                     <Typography variant="h6" className={classes.title}>
                         Covid19
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    {/* <Button color="inherit">Login</Button> */}
                     <IconButton edge="end"
                         aria-label="account of current user"
                         aria-haspopup="true"
