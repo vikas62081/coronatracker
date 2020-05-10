@@ -10,6 +10,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import CardHeader from '@material-ui/core/CardHeader';
 import PersonOutlineTwoToneIcon from '@material-ui/icons/PersonOutlineTwoTone';
+import AcUnitRoundedIcon from '@material-ui/icons/AcUnitRounded';
+import IconBreadcrumbs from '../breadCrumb/IconBreadcrumbs';
+import {WorldMap} from '../world/WorldMap';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -28,7 +31,7 @@ export const About = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      {/* <CssBaseline /> */}
+      {/* <IconBreadcrumbs/> */}
       <Container fixed>
         <Typography component="div" />
         <Grid spacing={2}>
@@ -57,10 +60,10 @@ export const About = () => {
         </Grid>
         <Grid>
           
-          <Paper className={classes.paper}>
+          <Paper className={classes.paper}> 
           <Card variant="outlined">
               <Grid container>
-                <Grid><PersonOutlineTwoToneIcon style={{ fontSize: '300%', color: '#3f51b5' }} /></Grid>
+                <Grid><AcUnitRoundedIcon style={{ fontSize: '300%', color: '#3f51b5' }} /></Grid>
                 <Grid><CardHeader title={`Sources`} /></Grid>
               </Grid>
               <CardContent className={classes.cardContent}>

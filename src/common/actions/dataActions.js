@@ -19,12 +19,13 @@ export const getDataFromAPI = (dispatch) => {
         Axios.get('https://api.covid19india.org/data.json'),
         Axios.get('https://api.covid19india.org/zones.json'),
         Axios.get('https://api.covid19india.org/v2/state_district_wise.json'),
-        Axios.get('https://api.covid19api.com/summary')
-    ]).then(([response, zoneData, districtData, worldData]) => {
+        // Axios.get('https://api.covid19api.com/summary')
+        Axios.get('https://corona.lmao.ninja/v2/all')
+    ]).then(([response, zoneData, districtData,worldData]) => {
         const { cases_time_series, statewise } = response.data
         const { zones } = zoneData.data
 
-        const dailyCases = cases_time_series.map(data => {
+        const dailyCases = cases_time_series.filter(dt => dt.dailyconfirmed !== "0").map(data => {
             return {
                 ...data,
                 id: uuid(),
@@ -67,8 +68,8 @@ export const getDataFromAPI = (dispatch) => {
         // },{})
         // console.log(aa)
         // console.log(worldData.data)
-        const { Global, Date } = worldData.data
-        dispatch({type:WORLD_TOTAL_CASES,payload:convertWorldData(Global,Date)})
+        // const { Global, Date } = worldData.data
+        dispatch({type:WORLD_TOTAL_CASES,payload:convertWorldData(worldData.data)})
 
     })
 
@@ -81,18 +82,23 @@ export const getDataFromAPI = (dispatch) => {
 //     zones[state]=zones[state]?[...zones[state],zone] : [zone]
 //     return zones;
 // },[])
-const convertWorldData=(Global,date)=>{
-    const { NewConfirmed, NewDeaths,
-        NewRecovered, TotalConfirmed,
-        TotalDeaths, TotalRecovered } = Global
+const convertWorldData=(global)=>{
+    const { todayCases, todayDeaths,active,
+         cases,updated,critical,affectedCountries,
+         casesPerOneMillion,deathsPerOneMillion,
+        deaths, recovered } = global
     return {
-        confirmed:TotalConfirmed,
-        deaths:TotalDeaths,
-        active:(TotalConfirmed-(TotalDeaths+TotalRecovered)),
-        recovered:TotalRecovered,
-        deltaconfirmed:NewConfirmed,
-        deltadeaths:NewDeaths,
-        deltarecovered:NewRecovered,
-        lastupdatedtime: moment(date).format('DD/MM/YYYY hh:mm:ss')
+        confirmed:cases,
+        deaths:deaths,
+        active:active,
+        recovered:recovered,
+        deltaconfirmed:todayCases,
+        deltadeaths:todayDeaths,
+        deltarecovered:0,
+        critical,
+        casesPerOneMillion,
+        deathsPerOneMillion,
+        affectedCountries,
+        lastupdatedtime: moment(updated).format('DD/MM/YYYY hh:mm:ss')
     }
 }

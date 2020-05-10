@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor:'#3574b5'
     },
     text: {
-        fontWeight: "bolder",
+        fontWeight: "bold",
         fontSize: 24,
         color: "rgb(239, 239, 247)"
     },

@@ -16,8 +16,9 @@ import Paper from '@material-ui/core/Paper';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 // import Checkbox from '@material-ui/core/Checkbox';
-// import IconButton from '@material-ui/core/IconButton';
+import IconButton from '@material-ui/core/IconButton';
 // import Tooltip from '@material-ui/core/Tooltip';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 // import Switch from '@material-ui/core/Switch';
@@ -25,9 +26,10 @@ import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
 // import FilterListIcon from '@material-ui/icons/FilterList';
 import NumberFormat from 'react-number-format';
 import { toggleHeart } from '../../actions/reducerActions'
-import { Link } from 'react-router-dom';
-
-
+import { Link } from 'react-router-dom'
+import BackspaceIcon from '@material-ui/icons/Backspace';
+import ErrorTwoToneIcon from '@material-ui/icons/ErrorTwoTone';
+import ErrorSharpIcon from '@material-ui/icons/ErrorSharp';
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -55,11 +57,14 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'state', numeric: false, disablePadding: true, label: 'State' },
-  { id: 'confirmed', numeric: true, disablePadding: false, label: 'Confirmed' },
+  { id: 'country', numeric: false, disablePadding: true, label: 'Country' },
+  { id: 'cases', numeric: true, disablePadding: false, label: 'Cnf' },
   { id: 'deaths', numeric: true, disablePadding: false, label: 'Deaths' },
-  { id: 'recovered', numeric: true, disablePadding: false, label: 'Recovered' },
+  { id: 'recovered', numeric: true, disablePadding: false, label: 'Rcvd' },
   { id: 'active', numeric: true, disablePadding: false, label: 'Active' },
+  { id: 'tests', numeric: true, disablePadding: false, label: 'Tests' },
+  { id: 'critical', numeric: true, disablePadding: false, label: 'Criticals' },
+  { id: 'continent', numeric: true, disablePadding: false, label: 'Continent' },
 ];
 
 function EnhancedTableHead(props) {
@@ -143,7 +148,7 @@ const EnhancedTableToolbar = (props) => {
         [classes.highlight]: numSelected > 0,
       })}>
       <Typography className={classes.title} align='left' variant="h6" id="tableTitle" component="div">
-        {title === undefined ? 'INDIA COVID-19 STATISTICS' : title}
+        {title} COVID-19 STATISTICS
       </Typography>
     </Toolbar>
   );
@@ -190,7 +195,15 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 2
   },
   tableCell: {
-    padding:'12px 8px'
+    padding: '8px 5px'
+  },
+  country: {
+    verticalAlign: 'super'
+    , paddingLeft: 2
+  },
+  flag: {
+    width: 35,
+    height: 23
   },
   visuallyHidden: {
     border: 0,
@@ -205,10 +218,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TableTracker2({ rows, dispatch, title }) {
+export default function WorldTable({ rows, stateName, dispatch }) {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('');
+  const title = "World"
+  const [order, setOrder] = React.useState('desc');
+  const [orderBy, setOrderBy] = React.useState('cases');
   const [selected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(8);
@@ -267,7 +281,7 @@ export default function TableTracker2({ rows, dispatch, title }) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} title={title} />
+        <EnhancedTableToolbar numSelected={selected.length} title={title.toUpperCase()} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -289,43 +303,43 @@ export default function TableTracker2({ rows, dispatch, title }) {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   // const isItemSelected = isSelected(row.name);
-                  // const labelId = `enhanced-table-checkbox-${index}`;
-
+                  // const labelId = `enhanced-table-checkbox-${index}`;  
+                  const { flag } = row.countryInfo
                   return (
+
                     <TableRow
                       hover
-                      title={`${row.state} Covid-19 Informations`}
-                      key={row.id}
+                      title={`${row.country} (${row.countryInfo.iso3}) Covid-19 Informations`}
+                      key={index}
                     >
                       <TableCell component="th" scope="row" className={classes.tableCell}>
-                        {row.state!=="Total"?(row.status === false ?
-                          <FavoriteBorderOutlinedIcon onClick={(event) => handleClick(event, row)}
-                            className={classes.heartIconsEmpty} />
-                          : <FavoriteOutlinedIcon onClick={(event) => handleClick(event, row)}
-                            className={classes.heartIconsFill} />):null}
-                        {row.state!=='Total'?<Link color="inherit" className={classes.link} to={`/district/${row.state}`}>{row.state}</Link>
-                        :row.state
-                        }
-                        
-                        {/* <div component={Link} to={`/district/${row.state}`}>{row.state}</div> */}
+                        <img src={flag} className={classes.flag} />
+                        <span className={classes.country}>{row.country}</span>
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        <NumberFormat value={row.confirmed} displayType={'text'} thousandSeparator={true} />
-                        {row.deltaconfirmed > 0 ? <span className={classes.redIcons}>
-                          <ArrowUpwardIcon className={classes.icons} />{row.deltaconfirmed}
+                        <NumberFormat value={row.cases} displayType={'text'} thousandSeparator={true} />
+                        {row.todayCases > 0 ? <span className={classes.redIcons}>
+                          <ArrowUpwardIcon className={classes.icons} />{row.todayCases}
                         </span> : null}</TableCell>
                       <TableCell className={classes.tableCell}>
                         <NumberFormat value={row.deaths} displayType={'text'} thousandSeparator={true} />
-                        {row.deltadeaths > 0 ? <span className={classes.redIcons}>
-                          <ArrowUpwardIcon className={classes.icons} />{row.deltadeaths}
+                        {row.todayDeaths > 0 ? <span className={classes.redIcons}>
+                          <ArrowUpwardIcon className={classes.icons} />{row.todayDeaths}
                         </span> : null}</TableCell>
                       <TableCell className={classes.tableCell}>
                         <NumberFormat value={row.recovered} displayType={'text'} thousandSeparator={true} />
-                        {row.deltarecovered > 0 ? <span className={classes.greenIcons}>
-                          <ArrowUpwardIcon className={classes.icons} />{row.deltarecovered}
-                        </span> : null}</TableCell>
+                      </TableCell>
                       <TableCell className={classes.tableCell}>
                         <NumberFormat value={row.active} displayType={'text'} thousandSeparator={true} />
+                      </TableCell>
+                      <TableCell className={classes.tableCell}>
+                        <NumberFormat value={row.tests} displayType={'text'} thousandSeparator={true} />
+                      </TableCell>
+                      <TableCell className={classes.tableCell}>
+                        <NumberFormat value={row.critical} displayType={'text'} thousandSeparator={true} />
+                      </TableCell>
+                      <TableCell className={classes.tableCell}>
+                        {row.continent}
                       </TableCell>
                     </TableRow>
                   );

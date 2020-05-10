@@ -7,7 +7,7 @@ import TableTracker2 from '../components/tableTracker/TableTracker2';
 import { useDispatch, useSelector } from 'react-redux'
 import TotalReport from '../components/totalReport/TotalReport';
 import { addRowToSaveUser } from '../actions/reducerActions'
-import SimpleSnackbar from '../components/alert/SimpleSnackbar';
+// import SimpleSnackbar from '../components/alert/SimpleSnackbar';
 import Progress  from '../components/progress/Progress'
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -67,7 +67,7 @@ export default function Home() {
     };
     return (
         <div className={classes.root}>
-            <SimpleSnackbar open={open} close={handleClose} isDataAdded={isDataAdded} />
+            {/* <SimpleSnackbar open={open} close={handleClose} isDataAdded={isDataAdded} /> */}
             {tableData.length?<Grid container spacing={1} direction="row"
                 justify="flex-start" alignItems="stretch" className={classes.container}>
                 <Grid item sm={3} xs={12}>

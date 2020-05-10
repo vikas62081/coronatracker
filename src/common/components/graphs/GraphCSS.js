@@ -16,7 +16,7 @@ export const primaryyAxis = {
     export const legendSettings = { visible: true };
     export const marker = {
         visible: true,
-        width: 5, height: 5,
+        width: 0, height: 0,
         //  dataLabel: { visible: true }
     };
    export const empty = {
@@ -29,4 +29,4 @@ export const primaryyAxis = {
     export const border = { width: 0, color: '#FF0000' };
     export const animation = { enable: true, duration: 2200, delay: 2000 };
     export const margin = { left: 0, right: 20, top: 0, bottom: 0 };
-    export const width=4;
+    export const width=5;

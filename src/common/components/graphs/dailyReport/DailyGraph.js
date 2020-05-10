@@ -17,6 +17,7 @@ function DailyGraph({rows}) {
     const primaryyAxis = {
         title: "Daily Coronavirus cases",
         valueType: isLogarithmic === 1 ? 'Logarithmic' : 'Double',
+        // majorGridLines: { width: 0 },
         // labelPlacement:'OnTicks'
         // labelFormat: '${value}K'
     };
