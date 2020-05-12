@@ -9,10 +9,10 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "bold"
     },
     marginBottom: {
-        paddingBottom: 20,
-        marginBottom:2,
-        borderRadius:3,
-        backgroundColor:'#3574b5'
+        paddingBottom: 5,
+        marginBottom: 2,
+        borderRadius: 3,
+        backgroundColor: '#3574b5'
     },
     text: {
         fontWeight: "bold",
@@ -22,62 +22,85 @@ const useStyles = makeStyles((theme) => ({
     daily: {
         fontSize: '50%'
     }
-    ,
+    ,percent:{
+        color:'#f2f2f2',
+        fontSize:'130%',
+        fontWeight:600
+
+    },cnf:{
+        fontSize:'120%',
+        fontWeight:500,
+    color: '#35c5d4'
+    }
 }));
-function TotalReport({ data,title }) {
+function TotalReport({ data, title }) {
     const classes = useStyles();
+    const { lastupdatedtime,
+        confirmed, deltaconfirmed,
+        deaths, deltadeaths,
+        recovered, deltarecovered,
+        active, } = data
     return (
         <div>
             <Typography variant="h3" className={classes.h4} style={{ color: "rgb(239, 239, 247)" }}>
-                {title===undefined?'Quick Facts':title}
-        </Typography>
+                {title === undefined ? 'Quick Facts' : title}
+            </Typography>
             <Typography variant="overline" display="block" gutterBottom
                 style={{ color: "rgb(239, 239, 247)" }}>
-                updated : {moment(data.lastupdatedtime,'DD-MM-YYYY HH:mm:ss').fromNow()}
-        </Typography> 
+                updated : {moment(lastupdatedtime, 'DD-MM-YYYY HH:mm:ss').fromNow()}
+            </Typography>
             <div className={classes.marginBottom}>
                 <Typography variant="h4" className={classes.h4} style={{ color: "rgb(53, 197, 212)" }}>
-                    <NumberFormat value={data.confirmed} displayType={'text'} thousandSeparator={true} />
-                    <span className={classes.daily}>
-                        (+<NumberFormat value={data.deltaconfirmed} displayType={'text'}
-                            thousandSeparator={true} />)
-            </span>
+                    <NumberFormat value={confirmed} displayType={'text'} thousandSeparator={true} />
                 </Typography>
+                <span className={classes.cnf}>
+                    (+<NumberFormat value={deltaconfirmed} displayType={'text'}
+                        thousandSeparator={true} />)
+            </span>
                 <Typography variant="subtitle1" className={classes.text} >
                     Total Confirmed
             </Typography>
             </div>
             <div className={classes.marginBottom}>
                 <Typography variant="h4" className={classes.h4} style={{ color: "#f65164" }}>
-                    <NumberFormat value={data.deaths} displayType={'text'} thousandSeparator={true} />
+                    <NumberFormat value={deaths} displayType={'text'} thousandSeparator={true} />
                     <span className={classes.daily}>
-                        (+<NumberFormat value={data.deltadeaths} displayType={'text'} thousandSeparator={true} />)
+                        (+<NumberFormat value={deltadeaths} displayType={'text'} thousandSeparator={true} />)
                    </span>
                 </Typography>
+                <div className={classes.percent}>
+                    {'['+((deaths * 100) / confirmed).toFixed(2) + '%]'}
+                </div>
                 <Typography variant="subtitle1" className={classes.text}>
                     Total Deceased
             </Typography>
             </div>
             <div className={classes.marginBottom}>
                 <Typography variant="h4" className={classes.h4} style={{ color: "#f8f540" }}>
-                    <NumberFormat value={data.active} displayType={'text'} thousandSeparator={true} />
+                    <NumberFormat value={active} displayType={'text'} thousandSeparator={true} />
                 </Typography>
+                <div className={classes.percent}>
+                    {'['+((active * 100) / confirmed).toFixed(2) + '%]'}
+                </div>
                 <Typography variant="subtitle1" className={classes.text}>
                     Total Active
             </Typography>
             </div>
             <div className={classes.marginBottom}>
                 <Typography variant="h4" className={classes.h4} style={{ color: "#65dd9b" }}>
-                    <NumberFormat value={data.recovered} displayType={'text'} thousandSeparator={true} />
+                    <NumberFormat value={recovered} displayType={'text'} thousandSeparator={true} />
                     <span className={classes.daily}>
-                        (+<NumberFormat value={data.deltarecovered} displayType={'text'} thousandSeparator={true} />)</span>
+                        (+<NumberFormat value={deltarecovered} displayType={'text'} thousandSeparator={true} />)</span>
                 </Typography>
+                <div className={classes.percent}>
+                    {'['+((recovered * 100) / confirmed).toFixed(2) + '%]'}
+                </div>
                 <Typography variant="subtitle1" className={classes.text}>
                     Total Recovered
             </Typography>
 
             </div>
-        </div> 
+        </div>
     )
 }
 

@@ -63,7 +63,7 @@ function WorldReport() {
             {/* <SimpleSnackbar open={open} close={handleClose} isDataAdded={isDataAdded} /> */}
             {tableData?<Grid container spacing={1} direction="row"
                 justify="flex-start" alignItems="stretch" className={classes.container}>
-                <Grid item sm={4} xs={12}>
+                <Grid item xs={12} sm={4} md={3}>
                     <Paper className={classes.paper}>
                     {WolrdTotalData && <TotalReport data={WolrdTotalData}
               title={`World Quick Facts`} />}

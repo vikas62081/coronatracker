@@ -37,7 +37,7 @@ function TotalGraph({ rows }) {
                 || moment(weekBefore).isSame(row.date))
             setGraphData(week)
         }
-        else if (newValue == 1) {
+        else if (newValue === 1) {
             const monthBefore = moment().subtract(1, 'months').format('D MMM YYYY')
             const month = rows.filter(row => moment(monthBefore).isBefore(row.date)
                 || moment(monthBefore).isSame(row.date))

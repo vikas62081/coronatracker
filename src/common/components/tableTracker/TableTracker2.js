@@ -55,7 +55,7 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'state', numeric: false, disablePadding: true, label: 'State' },
+  { id: 'state', numeric: false, disablePadding: true, label: 'State', },
   { id: 'confirmed', numeric: true, disablePadding: false, label: 'Confirmed' },
   { id: 'deaths', numeric: true, disablePadding: false, label: 'Deaths' },
   { id: 'recovered', numeric: true, disablePadding: false, label: 'Recovered' },
@@ -211,7 +211,7 @@ export default function TableTracker2({ rows, dispatch, title }) {
   const [orderBy, setOrderBy] = React.useState('');
   const [selected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(8);
+  const [rowsPerPage, setRowsPerPage] = React.useState(25);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -339,7 +339,7 @@ export default function TableTracker2({ rows, dispatch, title }) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[8, 5, 10, 25]}
+          rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}

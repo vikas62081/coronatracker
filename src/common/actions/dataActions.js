@@ -1,7 +1,7 @@
 import Axios from 'axios'
 import { v4 as uuid } from 'uuid';
 import * as moment from "moment/moment.js"
-import { DATE_FORMATTER, STATE_OF_INDIA } from './const'
+import { DATE_FORMATTER } from './const'
 import {
     ADD_STATE_WISE,
     ADD_DAILY_CASES,
@@ -87,6 +87,7 @@ const convertWorldData=(global)=>{
          cases,updated,critical,affectedCountries,
          casesPerOneMillion,deathsPerOneMillion,
         deaths, recovered } = global
+        // console.log(new Date(updated))
     return {
         confirmed:cases,
         deaths:deaths,
@@ -99,6 +100,6 @@ const convertWorldData=(global)=>{
         casesPerOneMillion,
         deathsPerOneMillion,
         affectedCountries,
-        lastupdatedtime: moment(updated).format('DD/MM/YYYY hh:mm:ss')
+        lastupdatedtime: moment(new Date(updated)).format('DD/MM/YYYY hh:mm:ss')
     }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -8,7 +8,7 @@ import TotalGraph from '../components/graphs/totalGraph/TotalGraph';
 import Progress from '../components/progress/Progress'
 import {GoogleDailyGraph} from '../components/graphs/dailyReport/GoogleDailyGraph'
 // import {getDataFromAPI} from '../actions/dataActions'
-import {useDispatch,useSelector} from 'react-redux'
+import {useSelector} from 'react-redux'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,

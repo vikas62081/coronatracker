@@ -11,8 +11,7 @@ import Button from '@material-ui/core/Button';
 import CardHeader from '@material-ui/core/CardHeader';
 import PersonOutlineTwoToneIcon from '@material-ui/icons/PersonOutlineTwoTone';
 import AcUnitRoundedIcon from '@material-ui/icons/AcUnitRounded';
-import IconBreadcrumbs from '../breadCrumb/IconBreadcrumbs';
-import {WorldMap} from '../world/WorldMap';
+// import { MTable } from './MTable';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -32,9 +31,9 @@ export const About = () => {
   return (
     <div className={classes.root}>
       {/* <IconBreadcrumbs/> */}
+      {/* <MTable/> */}
       <Container fixed>
-        <Typography component="div" />
-        <Grid spacing={2}>
+        <Grid>
           <Paper className={classes.paper}>
             <Card variant="outlined">
               <Grid container>

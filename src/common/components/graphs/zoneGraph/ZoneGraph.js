@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import {ORANGE,RED,GREEN} from '../../../actions/const'
 import {
     AccumulationChartComponent, AccumulationSeriesCollectionDirective,
@@ -13,22 +12,31 @@ export const ZoneGraph = ({state,stateName}) => {
         ddd[zone] = ddd[zone] ? [...ddd[zone], dd] : [dd]
         return ddd;
     }, {})
-
-    const d = [
+    let d;
+try {
+    const OZoneLength=zoneInfo.Orange?zoneInfo.Orange.length:0;
+    const RZoneLength=zoneInfo.Red?zoneInfo.Red.length:0;
+    const GZoneLength=zoneInfo.Green?zoneInfo.Green.length:0;
+    // console.log(OZoneLength)
+    d = [
         { 
         zone: ORANGE,
-         value: ((zoneInfo.Orange.length / jharlen) * 100).toFixed(0),
-         text: ((zoneInfo.Orange.length / jharlen) * 100).toFixed(0)+'%',
-        numberOfDist:`District :  ${zoneInfo.Orange.length}`},
+         value:((OZoneLength / jharlen) * 100).toFixed(0),
+         text: ((OZoneLength / jharlen) * 100).toFixed(0)+'%',
+        numberOfDist:`District :  ${OZoneLength}`},
         { zone: RED,
-        value: ((zoneInfo.Red.length / jharlen) * 100).toFixed(0),
-        text: ((zoneInfo.Red.length / jharlen) * 100).toFixed(0)+'%',
-        numberOfDist:`District :  ${zoneInfo.Red.length}`},
+        value: ((RZoneLength / jharlen) * 100).toFixed(0),
+        text: ((RZoneLength / jharlen) * 100).toFixed(0)+'%',
+        numberOfDist:`District :  ${RZoneLength}`},
         { zone: GREEN,
-        value: ((zoneInfo.Green.length / jharlen) * 100).toFixed(0),
-        text: ((zoneInfo.Green.length / jharlen) * 100).toFixed(0)+'%',
-        numberOfDist: `District :  ${zoneInfo.Green.length}`}
+        value: ((GZoneLength / jharlen) * 100).toFixed(0),
+        text: ((GZoneLength / jharlen) * 100).toFixed(0)+'%',
+        numberOfDist: `District :  ${GZoneLength}`}
     ]
+} catch (error) {
+    console.log(error)
+}
+
     const datalabel = { visible: true,
         position: 'Inside', 
         name:'numberOfDist',

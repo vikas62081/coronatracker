@@ -14,22 +14,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
-import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-// import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
 // import Tooltip from '@material-ui/core/Tooltip';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 // import Switch from '@material-ui/core/Switch';
 // import DeleteIcon from '@material-ui/icons/Delete';
 // import FilterListIcon from '@material-ui/icons/FilterList';
 import NumberFormat from 'react-number-format';
-import { toggleHeart } from '../../actions/reducerActions'
-import { Link } from 'react-router-dom'
-import BackspaceIcon from '@material-ui/icons/Backspace';
-import ErrorTwoToneIcon from '@material-ui/icons/ErrorTwoTone';
-import ErrorSharpIcon from '@material-ui/icons/ErrorSharp';
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -58,7 +48,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
   { id: 'country', numeric: false, disablePadding: true, label: 'Country' },
-  { id: 'cases', numeric: true, disablePadding: false, label: 'Cnf' },
+  { id: 'cases', numeric: true, disablePadding: false, label: 'Confirm' },
   { id: 'deaths', numeric: true, disablePadding: false, label: 'Deaths' },
   { id: 'recovered', numeric: true, disablePadding: false, label: 'Rcvd' },
   { id: 'active', numeric: true, disablePadding: false, label: 'Active' },
@@ -242,9 +232,9 @@ export default function WorldTable({ rows, stateName, dispatch }) {
   // setSelected([]);
   // };
 
-  const handleClick = (event, row) => {
+  // const handleClick = (event, row) => {
     // addRowToSaveUser(dispatch,row)
-    toggleHeart(dispatch, row.id)
+    // toggleHeart(dispatch, row.id)
     // const selectedIndex = selected.indexOf(name);
     // let newSelected = [];
 
@@ -262,7 +252,7 @@ export default function WorldTable({ rows, stateName, dispatch }) {
     // }
 
     // setSelected(newSelected);
-  };
+  // };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -313,7 +303,7 @@ export default function WorldTable({ rows, stateName, dispatch }) {
                       key={index}
                     >
                       <TableCell component="th" scope="row" className={classes.tableCell}>
-                        <img src={flag} className={classes.flag} />
+                        <img src={flag} className={classes.flag} alt={`${row.country} flag`} />
                         <span className={classes.country}>{row.country}</span>
                       </TableCell>
                       <TableCell className={classes.tableCell}>

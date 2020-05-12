@@ -15,7 +15,7 @@ function Main() {
             <Router>
             <Header />
                 <Switch>
-                    {routes.map((route) => <Route key={route.path} {...route} />)}
+                    {routes.map((route,index) => <Route key={index} {...route} />)}
                 </Switch>
             </Router>
         </div>
