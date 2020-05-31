@@ -26,7 +26,6 @@ export const WorldMap = () => {
         m.splice(0, 0, s)
         setGraphData(m)
       })
-
   }, [])
   return (
     <div className={"my-pretty-chart-container"}>
