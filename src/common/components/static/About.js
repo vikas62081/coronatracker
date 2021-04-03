@@ -47,9 +47,19 @@ export const About = () => {
                 <Typography variant="subtitle1" >Vikas Kumar</Typography>
                 <Typography variant="subtitle1">You can email me at : thecodevik@gmail.com</Typography>
               </CardContent>
-              <CardActions>
-                <a target='_blank' href='https://www.linkedin.com/in/vikas-kumar-vishwakarma-895248172/'><Button size="small"> You can find me here LinkedIn</Button></a>
-              </CardActions>
+              <Grid container>
+                <Grid sm={4} items>
+                  <CardActions>
+                    <a target='_blank' href='https://vikas62081.github.io/newTodos/'><Button size="small"> Todo App</Button></a>
+                  </CardActions>
+                </Grid><Grid sm={8} items>
+                  <CardActions>
+                    <a target='_blank' href='https://www.linkedin.com/in/vikas-kumar-vishwakarma-895248172/'><Button size="small"> You can find me here LinkedIn</Button></a>
+                  </CardActions>
+                </Grid>
+              </Grid>
+
+
             </Card>
             {/* <Typography>About</Typography>
             <Typography variant="h5" gutterBottom>Who Developed this website?</Typography>
@@ -58,9 +68,9 @@ export const About = () => {
           </Paper>
         </Grid>
         <Grid>
-          
-          <Paper className={classes.paper}> 
-          <Card variant="outlined">
+
+          <Paper className={classes.paper}>
+            <Card variant="outlined">
               <Grid container>
                 <Grid><AcUnitRoundedIcon style={{ fontSize: '300%', color: '#3f51b5' }} /></Grid>
                 <Grid><CardHeader title={`Sources`} /></Grid>
@@ -69,7 +79,7 @@ export const About = () => {
                 {/* <Typography className={classes.title} color="textSecondary">
                   Who Developed this website?
         </Typography>  */}
-        <Typography variant="subtitle1" >covid19india</Typography>
+                <Typography variant="subtitle1" >covid19india</Typography>
                 <Typography variant="subtitle1" >ncov2019</Typography>
                 <Typography variant="subtitle1">WHO</Typography>
               </CardContent>
