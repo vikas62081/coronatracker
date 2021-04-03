@@ -28,8 +28,8 @@ export const getDataFromAPI = (dispatch) => {
         const dailyCases = cases_time_series.filter(dt => dt.dailyconfirmed !== "0").map(data => {
             return {
                 ...data,
-                id: uuid(),
-                date: moment(`${data.date}2020`).format(DATE_FORMATTER),
+                id: uuid(), 
+                date: moment(data.date).format(DATE_FORMATTER),
                 dailyconfirmed: parseInt(data.dailyconfirmed, 10),
                 dailydeceased: parseInt(data.dailydeceased, 10),
                 dailyrecovered: parseInt(data.dailyrecovered, 10),

@@ -1,4 +1,4 @@
-export const DATE_FORMATTER = 'D MMM YYYY'
+export const DATE_FORMATTER = 'DD MMM YYYY'
 export const STATE_OF_INDIA = ['Andaman and Nicobar Islands',
     'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar',
     'Chandigarh', 'Chhattisgarh', 'Dadra and Nagar Haveli',
