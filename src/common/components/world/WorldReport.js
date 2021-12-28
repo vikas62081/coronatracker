@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
     // backgroundColor:"#2ca7fd"
-    backgroundColor: "#397bbf"
+    backgroundColor: "#0c9757e0"
   },
   container: {
     width: '100%',
@@ -60,24 +60,24 @@ function WorldReport() {
 
   return (
     <div className={classes.root}>
-            {/* <SimpleSnackbar open={open} close={handleClose} isDataAdded={isDataAdded} /> */}
-            {tableData?<Grid container spacing={1} direction="row"
-                justify="flex-start" alignItems="stretch" className={classes.container}>
-                <Grid item xs={12} sm={4} md={3}>
-                    <Paper className={classes.paper}>
-                    {WolrdTotalData && <TotalReport data={WolrdTotalData}
+      {/* <SimpleSnackbar open={open} close={handleClose} isDataAdded={isDataAdded} /> */}
+      {tableData ? <Grid container spacing={1} direction="row"
+        justify="flex-start" alignItems="stretch" className={classes.container}>
+        <Grid item xs={12} sm={4} md={3}>
+          <Paper className={classes.paper}>
+            {WolrdTotalData && <TotalReport data={WolrdTotalData}
               title={`World Quick Facts`} />}
-                    </Paper>
-                </Grid>
-                <Grid item xs>
-                <Paper className={classes.paper}>
-                  <CriticalReport data={WolrdTotalData}/>
-                   <WorldTable rows={tableData}/>
-                        </Paper>
-                </Grid>
-            </Grid>:<Progress/>
-        }
-        </div>
+          </Paper>
+        </Grid>
+        <Grid item xs>
+          <Paper className={classes.paper}>
+            <CriticalReport data={WolrdTotalData} />
+            <WorldTable rows={tableData} />
+          </Paper>
+        </Grid>
+      </Grid> : <Progress />
+      }
+    </div>
   )
 }
 

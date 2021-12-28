@@ -215,7 +215,7 @@ export default function WorldTable({ rows, stateName, dispatch }) {
   const [orderBy, setOrderBy] = React.useState('cases');
   const [selected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(8);
+  const [rowsPerPage, setRowsPerPage] = React.useState(11);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -233,25 +233,25 @@ export default function WorldTable({ rows, stateName, dispatch }) {
   // };
 
   // const handleClick = (event, row) => {
-    // addRowToSaveUser(dispatch,row)
-    // toggleHeart(dispatch, row.id)
-    // const selectedIndex = selected.indexOf(name);
-    // let newSelected = [];
+  // addRowToSaveUser(dispatch,row)
+  // toggleHeart(dispatch, row.id)
+  // const selectedIndex = selected.indexOf(name);
+  // let newSelected = [];
 
-    // if (selectedIndex === -1) {
-    //   newSelected = newSelected.concat(selected, name);
-    // } else if (selectedIndex === 0) {
-    //   newSelected = newSelected.concat(selected.slice(1));
-    // } else if (selectedIndex === selected.length - 1) {
-    //   newSelected = newSelected.concat(selected.slice(0, -1));
-    // } else if (selectedIndex > 0) {
-    //   newSelected = newSelected.concat(
-    //     selected.slice(0, selectedIndex),
-    //     selected.slice(selectedIndex + 1),
-    //   );
-    // }
+  // if (selectedIndex === -1) {
+  //   newSelected = newSelected.concat(selected, name);
+  // } else if (selectedIndex === 0) {
+  //   newSelected = newSelected.concat(selected.slice(1));
+  // } else if (selectedIndex === selected.length - 1) {
+  //   newSelected = newSelected.concat(selected.slice(0, -1));
+  // } else if (selectedIndex > 0) {
+  //   newSelected = newSelected.concat(
+  //     selected.slice(0, selectedIndex),
+  //     selected.slice(selectedIndex + 1),
+  //   );
+  // }
 
-    // setSelected(newSelected);
+  // setSelected(newSelected);
   // };
 
   const handleChangePage = (event, newPage) => {
@@ -343,7 +343,7 @@ export default function WorldTable({ rows, stateName, dispatch }) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[8, 5, 10, 25]}
+          rowsPerPageOptions={[11, 5, 10, 25]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}

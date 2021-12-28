@@ -6,7 +6,7 @@ import {
     ADD_STATE_WISE,
     ADD_DAILY_CASES,
     TOTAL_CASES, ADD_ZONE_DATA,
-     ADD_DISTRICT_WISE,WORLD_TOTAL_CASES
+    ADD_DISTRICT_WISE, WORLD_TOTAL_CASES
 } from './actionTypes'
 export const getDataFromAPI = (dispatch) => {
     console.log("API called")
@@ -16,19 +16,19 @@ export const getDataFromAPI = (dispatch) => {
         status: false
     }
     Promise.all([
-        Axios.get('https://api.covid19india.org/data.json'),
-        Axios.get('https://api.covid19india.org/zones.json'),
-        Axios.get('https://api.covid19india.org/v2/state_district_wise.json'),
+        Axios.get('https://covid-vikas62018-node-api.herokuapp.com/data'),
+        Axios.get('https://covid-vikas62018-node-api.herokuapp.com/zone'),
+        Axios.get('https://covid-vikas62018-node-api.herokuapp.com/state'),
         // Axios.get('https://api.covid19api.com/summary')
         Axios.get('https://corona.lmao.ninja/v2/all')
-    ]).then(([response, zoneData, districtData,worldData]) => {
+    ]).then(([response, zoneData, districtData, worldData]) => {
         const { cases_time_series, statewise } = response.data
         const { zones } = zoneData.data
 
         const dailyCases = cases_time_series.filter(dt => dt.dailyconfirmed !== "0").map(data => {
             return {
                 ...data,
-                id: uuid(), 
+                id: uuid(),
                 date: moment(data.date).format(DATE_FORMATTER),
                 dailyconfirmed: parseInt(data.dailyconfirmed, 10),
                 dailydeceased: parseInt(data.dailydeceased, 10),
@@ -69,7 +69,7 @@ export const getDataFromAPI = (dispatch) => {
         // console.log(aa)
         // console.log(worldData.data)
         // const { Global, Date } = worldData.data
-        dispatch({type:WORLD_TOTAL_CASES,payload:convertWorldData(worldData.data)})
+        dispatch({ type: WORLD_TOTAL_CASES, payload: convertWorldData(worldData.data) })
 
     })
 
@@ -82,20 +82,20 @@ export const getDataFromAPI = (dispatch) => {
 //     zones[state]=zones[state]?[...zones[state],zone] : [zone]
 //     return zones;
 // },[])
-const convertWorldData=(global)=>{
-    const { todayCases, todayDeaths,active,
-         cases,updated,critical,affectedCountries,
-         casesPerOneMillion,deathsPerOneMillion,
+const convertWorldData = (global) => {
+    const { todayCases, todayDeaths, active,
+        cases, updated, critical, affectedCountries,
+        casesPerOneMillion, deathsPerOneMillion,
         deaths, recovered } = global
-        // console.log(new Date(updated))
+    // console.log(new Date(updated))
     return {
-        confirmed:cases,
-        deaths:deaths,
-        active:active,
-        recovered:recovered,
-        deltaconfirmed:todayCases,
-        deltadeaths:todayDeaths,
-        deltarecovered:0,
+        confirmed: cases,
+        deaths: deaths,
+        active: active,
+        recovered: recovered,
+        deltaconfirmed: todayCases,
+        deltadeaths: todayDeaths,
+        deltarecovered: 0,
         critical,
         casesPerOneMillion,
         deathsPerOneMillion,

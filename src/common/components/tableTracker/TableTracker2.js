@@ -190,7 +190,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 2
   },
   tableCell: {
-    padding:'12px 8px'
+    padding: '12px 8px'
   },
   visuallyHidden: {
     border: 0,
@@ -211,7 +211,7 @@ export default function TableTracker2({ rows, dispatch, title }) {
   const [orderBy, setOrderBy] = React.useState('');
   const [selected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(25);
+  const [rowsPerPage, setRowsPerPage] = React.useState(11);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -298,15 +298,15 @@ export default function TableTracker2({ rows, dispatch, title }) {
                       key={row.id}
                     >
                       <TableCell component="th" scope="row" className={classes.tableCell}>
-                        {row.state!=="Total"?(row.status === false ?
+                        {row.state !== "Total" ? (row.status === false ?
                           <FavoriteBorderOutlinedIcon onClick={(event) => handleClick(event, row)}
                             className={classes.heartIconsEmpty} />
                           : <FavoriteOutlinedIcon onClick={(event) => handleClick(event, row)}
-                            className={classes.heartIconsFill} />):null}
-                        {row.state!=='Total'?<Link color="inherit" className={classes.link} to={`/district/${row.state}`}>{row.state}</Link>
-                        :row.state
+                            className={classes.heartIconsFill} />) : null}
+                        {row.state !== 'Total' ? <Link color="inherit" className={classes.link} to={`/district/${row.state}`}>{row.state}</Link>
+                          : row.state
                         }
-                        
+
                         {/* <div component={Link} to={`/district/${row.state}`}>{row.state}</div> */}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
@@ -339,7 +339,7 @@ export default function TableTracker2({ rows, dispatch, title }) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[11, 5, 10, 25]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}

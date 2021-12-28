@@ -14,6 +14,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import CloseIcon from '@material-ui/icons/Close';
 import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import YouTubeIcon from '@material-ui/icons/YouTube';
 import InfoIcon from '@material-ui/icons/Info';
 import Sidebar from './Sidebar';
 import { Link } from 'react-router-dom';
@@ -84,15 +86,37 @@ export default function Header() {
                         Covid19
                     </Typography>
                     {/* <Button color="inherit">Login</Button> */}
+                    <IconButton edge="end"
+                        aria-label="account of current user"
+                        aria-haspopup="true"
+                        style={{ color: '#fff' }}
+                        component={Link}
+                        target='_blank'
+                        to="//www.instagram.com/imvikas62081/"
+                        title="Instagram"
+                    ><InstagramIcon />
+                    </IconButton>
+                    <IconButton edge="end"
+                        aria-label="account of current user"
+                        aria-haspopup="true"
+                        style={{ color: '#fff' }}
+                        component={Link}
+                        target="_blank"
+                        to="//www.youtube.com/c/codenemy"
+                        title='YouTube'
+                    ><YouTubeIcon />
+                    </IconButton>
+                    <IconButton edge="end"
+                        aria-label="account of current user"
+                        aria-haspopup="true"
+                        style={{ color: '#fff' }}
+                        component={Link}
+                        target='_blank'
+                        to="//www.facebook.com/vikas.k.vishwakarma.31"
+                        title="Facebook"
+                    ><FacebookIcon />
+                    </IconButton>
 
-                    <a target='_blank' href='https://www.facebook.com/vikas.k.vishwakarma.31'>
-                        <IconButton edge="end"
-                            aria-label="account of current user"
-                            aria-haspopup="true"
-                            style={{ color: '#fff' }}
-                        ><FacebookIcon />
-                        </IconButton>
-                    </a>
 
                 </Toolbar>
             </AppBar>

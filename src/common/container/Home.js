@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import TotalReport from '../components/totalReport/TotalReport';
 import { addRowToSaveUser } from '../actions/reducerActions'
 // import SimpleSnackbar from '../components/alert/SimpleSnackbar';
-import Progress  from '../components/progress/Progress'
+import Progress from '../components/progress/Progress'
 const useStyles = makeStyles((theme) => ({
     root: {
         // flexGrow: 1,
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
         // backgroundColor:"#2ca7fd"
-        backgroundColor: "#397bbf"
+        backgroundColor: "#f2f2f2"
     },
     container: {
         width: '100%',
@@ -45,17 +45,17 @@ export default function Home() {
     const totalData = useSelector((state) => state.totalReport);
     // const userData=useSelector((state) => state.savedByUser);
     const [userData, setUserData] = useState()
-    const [lenghtOfUserData,setLenghtOfUserData]=useState(0)
-    const [isDataAdded,setIsDataAdded]=useState(false)
+    const [lenghtOfUserData, setLenghtOfUserData] = useState(0)
+    const [isDataAdded, setIsDataAdded] = useState(false)
     useEffect(() => {
         setOpen(true);
         const userSavedData = tableData.filter(data => data.status)
-        lenghtOfUserData<userSavedData.length?setIsDataAdded(true):setIsDataAdded(false)
+        lenghtOfUserData < userSavedData.length ? setIsDataAdded(true) : setIsDataAdded(false)
         setLenghtOfUserData(userSavedData.length)
         dispatch(addRowToSaveUser(dispatch, userSavedData))
         setUserData(userSavedData)
         setTimeout(() => {
-            const savedStateCode=userSavedData.map(dt=>{return dt.statecode})
+            const savedStateCode = userSavedData.map(dt => { return dt.statecode })
             localStorage.setItem('userFav', JSON.stringify(savedStateCode))
         }, 200);
     }, [tableData])
@@ -67,24 +67,25 @@ export default function Home() {
     };
     return (
         <div className={classes.root}>
+
             {/* <SimpleSnackbar open={open} close={handleClose} isDataAdded={isDataAdded} /> */}
-            {tableData.length?<Grid container spacing={1} direction="row"
+            {tableData.length ? <Grid container spacing={1} direction="row"
                 justify="flex-start" alignItems="stretch" className={classes.container}>
                 <Grid item sm={3} xs={12}>
                     <Paper className={classes.paper}>
-                        {totalData&& <TotalReport data={totalData} />}
+                        {totalData && <TotalReport data={totalData} />}
                     </Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.paper}>
                         {/* {tableData && <TableTracker rows={tableData} />} */}
-                        {userData&&userData.length?
-                        <TableTracker2 rows={userData} dispatch={dispatch} title='WATCHLIST' />:null}
+                        {userData && userData.length ?
+                            <TableTracker2 rows={userData} dispatch={dispatch} title='WATCHLIST' /> : null}
                         {tableData && <TableTracker2 rows={tableData} dispatch={dispatch} />}
                     </Paper>
                 </Grid>
-            </Grid>:<Progress/>
-        }
+            </Grid> : <Progress />
+            }
         </div>
     );
 }
