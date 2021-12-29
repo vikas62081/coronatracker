@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
     // backgroundColor:"#2ca7fd"
-    backgroundColor: "#0c9757e0"
+    backgroundColor: "#f1f1f1"
   },
   container: {
     width: '100%',

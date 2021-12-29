@@ -11,8 +11,8 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         textAlign: 'center',
-        borderRadius: 3,
-        backgroundColor: '#8f1b97',
+        borderRadius: 5,
+        backgroundColor: '#3f50b5',
     },
     text: {
         fontWeight: "bold",

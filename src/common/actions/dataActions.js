@@ -20,10 +20,13 @@ export const getDataFromAPI = (dispatch) => {
         Axios.get('https://covid-vikas62018-node-api.herokuapp.com/zone'),
         Axios.get('https://covid-vikas62018-node-api.herokuapp.com/state'),
         // Axios.get('https://api.covid19api.com/summary')
-        Axios.get('https://corona.lmao.ninja/v2/all')
-    ]).then(([response, zoneData, districtData, worldData]) => {
+        Axios.get('https://corona.lmao.ninja/v2/all'),
+        Axios.get('https://covid-vikas62018-node-api.herokuapp.com/vaccine')
+
+    ]).then(([response, zoneData, districtData, worldData, vaccinationReportTillToday]) => {
         const { cases_time_series, statewise } = response.data
         const { zones } = zoneData.data
+        console.info(vaccinationReportTillToday)
 
         const dailyCases = cases_time_series.filter(dt => dt.dailyconfirmed !== "0").map(data => {
             return {
@@ -61,6 +64,7 @@ export const getDataFromAPI = (dispatch) => {
         dispatch({ type: TOTAL_CASES, payload: stateWiseCases[0] })
         dispatch({ type: ADD_ZONE_DATA, payload: zones })
         dispatch({ type: ADD_DISTRICT_WISE, payload: districtData.data })
+        dispatch({ type: "VACCINE", payload: vaccinationReportTillToday.data })
         // const aa=zoneInfo.Jharkhand.reduce((ddd,dd)=>{
         //     const {zone}=dd
         //     ddd[zone]=ddd[zone]?[...ddd[zone],dd]:[dd]

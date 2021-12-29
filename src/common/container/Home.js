@@ -9,6 +9,7 @@ import TotalReport from '../components/totalReport/TotalReport';
 import { addRowToSaveUser } from '../actions/reducerActions'
 // import SimpleSnackbar from '../components/alert/SimpleSnackbar';
 import Progress from '../components/progress/Progress'
+import VaccineReport from '../components/vaccine/vaccineReport';
 const useStyles = makeStyles((theme) => ({
     root: {
         // flexGrow: 1,
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
         // backgroundColor:"#2ca7fd"
-        backgroundColor: "#f2f2f2"
+        backgroundColor: "#f9f9f9"
     },
     container: {
         width: '100%',
@@ -43,6 +44,7 @@ export default function Home() {
     const [open, setOpen] = React.useState(false);
     const tableData = useSelector((state) => state.stateWiseReport);
     const totalData = useSelector((state) => state.totalReport);
+    const vaccineData = useSelector(state => state.vaccine)
     // const userData=useSelector((state) => state.savedByUser);
     const [userData, setUserData] = useState()
     const [lenghtOfUserData, setLenghtOfUserData] = useState(0)
@@ -67,7 +69,7 @@ export default function Home() {
     };
     return (
         <div className={classes.root}>
-
+            {vaccineData && <VaccineReport data={vaccineData} />}
             {/* <SimpleSnackbar open={open} close={handleClose} isDataAdded={isDataAdded} /> */}
             {tableData.length ? <Grid container spacing={1} direction="row"
                 justify="flex-start" alignItems="stretch" className={classes.container}>
