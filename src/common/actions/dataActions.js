@@ -8,6 +8,12 @@ import {
     TOTAL_CASES, ADD_ZONE_DATA,
     ADD_DISTRICT_WISE, WORLD_TOTAL_CASES
 } from './actionTypes'
+const getVaccinationReport = (dispatch) => {
+    Axios.get('https://covid-vikas62018-node-api.herokuapp.com/vaccine')
+        .then(resp => {
+            dispatch({ type: "VACCINE", payload: resp.data })
+        })
+}
 export const getDataFromAPI = (dispatch) => {
     console.log("API called")
     const getHistory = localStorage.getItem('userFav')
@@ -15,18 +21,18 @@ export const getDataFromAPI = (dispatch) => {
     const isExist = {
         status: false
     }
+    getVaccinationReport(dispatch)
     Promise.all([
         Axios.get('https://covid-vikas62018-node-api.herokuapp.com/data'),
         Axios.get('https://covid-vikas62018-node-api.herokuapp.com/zone'),
         Axios.get('https://covid-vikas62018-node-api.herokuapp.com/state'),
         // Axios.get('https://api.covid19api.com/summary')
         Axios.get('https://corona.lmao.ninja/v2/all'),
-        Axios.get('https://covid-vikas62018-node-api.herokuapp.com/vaccine')
 
-    ]).then(([response, zoneData, districtData, worldData, vaccinationReportTillToday]) => {
+
+    ]).then(([response, zoneData, districtData, worldData]) => {
         const { cases_time_series, statewise } = response.data
         const { zones } = zoneData.data
-        console.info(vaccinationReportTillToday)
 
         const dailyCases = cases_time_series.filter(dt => dt.dailyconfirmed !== "0").map(data => {
             return {
@@ -64,7 +70,7 @@ export const getDataFromAPI = (dispatch) => {
         dispatch({ type: TOTAL_CASES, payload: stateWiseCases[0] })
         dispatch({ type: ADD_ZONE_DATA, payload: zones })
         dispatch({ type: ADD_DISTRICT_WISE, payload: districtData.data })
-        dispatch({ type: "VACCINE", payload: vaccinationReportTillToday.data })
+
         // const aa=zoneInfo.Jharkhand.reduce((ddd,dd)=>{
         //     const {zone}=dd
         //     ddd[zone]=ddd[zone]?[...ddd[zone],dd]:[dd]

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
+import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { scaleQuantile } from 'd3-scale';
 import ReactTooltip from 'react-tooltip';
 
 import LinearGradient from './LinearGradient.js';
+import { Typography } from '@material-ui/core';
 // import './App.css';
 
 /** 
@@ -55,7 +56,7 @@ function VaccineReport(props) {
     const [data] = useState(props.data.vacc_st_data);
     const [gSize, setGSize] = useState(600)
     useEffect(() => {
-        setGSize(window.outerWidth > 500 ? 600 : 300)
+        setGSize(window.outerWidth > 400 ? 600 : 300)
     }, [window.outerWidth])
     const gradientData = {
         fromColor: COLOR_RANGE[0],
@@ -88,33 +89,38 @@ function VaccineReport(props) {
 
 
     return (
-        <div className="full-width-height container">
-            <h2 className="no-margin center">States and UTs Vaccination Report</h2>
+        <div >
+            <Typography variant='h6'>States and UTs Vaccination Report</Typography>
+            <i>Hover Over on map to see more...</i>
             <ReactTooltip>{tooltipContent}</ReactTooltip>
             <ComposableMap
                 projectionConfig={PROJECTION_CONFIG}
                 projection="geoMercator"
                 width={gSize}
-                height={220}
+                height={345}
                 data-tip=""
             >
-                <Geographies geography={INDIA_TOPO_JSON}>
-                    {({ geographies }) =>
-                        geographies.map(geo => {
-                            const current = data.find(s => s.st_name === geo.properties.name);
-                            return (
-                                <Geography
-                                    key={geo.rsmKey}
-                                    geography={geo}
-                                    fill={current ? colorScale(current.total_doses) : DEFAULT_COLOR}
-                                    style={geographyStyle}
-                                    onMouseEnter={onMouseEnter(geo, current)}
-                                    onMouseLeave={onMouseLeave}
-                                />
-                            );
-                        })
-                    }
-                </Geographies>
+
+                <ZoomableGroup zoom={1}>
+                    <Geographies geography={INDIA_TOPO_JSON}>
+                        {({ geographies }) =>
+                            geographies.map(geo => {
+                                const current = data.find(s => s.st_name === geo.properties.name);
+                                return (
+                                    <Geography
+                                        key={geo.rsmKey}
+                                        geography={geo}
+                                        fill={current ? colorScale(current.total_doses) : DEFAULT_COLOR}
+                                        style={geographyStyle}
+                                        onMouseEnter={onMouseEnter(geo, current)}
+                                        onMouseLeave={onMouseLeave}
+                                    />
+                                );
+                            })
+                        }
+
+                    </Geographies>
+                </ZoomableGroup>
             </ComposableMap>
             <LinearGradient data={gradientData} />
 

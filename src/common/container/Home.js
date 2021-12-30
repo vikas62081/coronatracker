@@ -69,7 +69,7 @@ export default function Home() {
     };
     return (
         <div className={classes.root}>
-            {vaccineData && <VaccineReport data={vaccineData} />}
+
             {/* <SimpleSnackbar open={open} close={handleClose} isDataAdded={isDataAdded} /> */}
             {tableData.length ? <Grid container spacing={1} direction="row"
                 justify="flex-start" alignItems="stretch" className={classes.container}>
@@ -80,14 +80,19 @@ export default function Home() {
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.paper}>
+                        {vaccineData ? <VaccineReport data={vaccineData} /> : <Progress />}
                         {/* {tableData && <TableTracker rows={tableData} />} */}
-                        {userData && userData.length ?
-                            <TableTracker2 rows={userData} dispatch={dispatch} title='WATCHLIST' /> : null}
-                        {tableData && <TableTracker2 rows={tableData} dispatch={dispatch} />}
+
                     </Paper>
                 </Grid>
-            </Grid> : <Progress />
-            }
+
+            </Grid> : <Progress />}
+            <Paper className={classes.paper}>
+                {userData && userData.length ?
+                    <TableTracker2 rows={userData} dispatch={dispatch} title='WATCHLIST' /> : null}
+                {tableData && <TableTracker2 rows={tableData} dispatch={dispatch} />}
+            </Paper>
+
         </div>
     );
 }
